@@ -9,7 +9,7 @@
 - Buena practicas de desarrollo con React.
 - Gestión del estado con Redux y React API Context.
 - Crear sistemas de enrutado con React Router.
-- + 5 Cursos de Regalo (Redux, React Router, Animaciones, Styled Components, Test con Jest y Enzyme).
+- Mas 5 Cursos de Regalo (Redux, React Router, Animaciones, Styled Components, Test con Jest y Enzyme).
 - Todo sobre React API Context.
 - Ciclo de vida de Componentes estatales y hooks.
 - Composición de Componentes.
