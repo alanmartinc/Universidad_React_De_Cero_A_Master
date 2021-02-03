@@ -1,5 +1,8 @@
 import React from 'react';
-import './TarjetaFruta.css'
+// import './TarjetaFruta.css'
+
+// Creando modulo en CSS para que nos cree un identificador único
+import styles from './TarjetaFruta.module.css'
 
 class TarjetaFruta extends React.Component {
     state = {
@@ -29,8 +32,8 @@ class TarjetaFruta extends React.Component {
         const hasItems = this.state.cantidad > 0
 
         // Concatenar Clases
-        const activeClass = hasItems ? 'TarjetaFruta-activa' : ''
-        const clases = `TarjetaFruta ${activeClass}`
+        const activeClass = hasItems ? styles['card-active'] : ''
+        const clases = `${styles.card} ${activeClass}`
 
         return (
             <div className={clases}>
