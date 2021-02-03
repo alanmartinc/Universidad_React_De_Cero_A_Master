@@ -1,4 +1,5 @@
 import React from 'react';
+import './TarjetaFruta.css'
 
 class TarjetaFruta extends React.Component {
     state = {
@@ -27,19 +28,12 @@ class TarjetaFruta extends React.Component {
         // Constante para lógica CSS
         const hasItems = this.state.cantidad > 0
 
-        // Forma de aplicar estilos
-        const styles = {
-            border:'1px solid black',
-            marginBottom: '1em',
-            borderRadius: '0.5em',
-            padding: '1em',
-            background: hasItems ? 'linear-gradient(45deg, black, #4a02f7)' : '#FFF',
-            color: hasItems > 0 ? '#FFF' : '#000',
-            transition: 'all 400ms ease-out'
-        }
+        // Concatenar Clases
+        const activeClass = hasItems ? 'TarjetaFruta-activa' : ''
+        const clases = `TarjetaFruta ${activeClass}`
 
         return (
-            <div style={styles}>
+            <div className={clases}>
                 <h3>{this.props.name}</h3>
                 <hr/>
                 <div>Cantidad: {this.state.cantidad}</div>
