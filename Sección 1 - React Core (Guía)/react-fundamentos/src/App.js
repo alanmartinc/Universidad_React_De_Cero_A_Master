@@ -28,19 +28,16 @@ const social = {
     twitter: '@luxfenix'
 }
 
-const resultado = Object.assign(
-    {},
-    perfil,
-    region,
-    social,
-    {
-        info: Object.assign(
-            {},
-            perfil.info,
-            region.info
-        )
+// Operador Spread
+const resultado = {
+    ...perfil,
+    ...region,
+    ...social,
+    info: {
+        ...perfil.info,
+        ...region.info
     }
-)
+}
 
 console.log(resultado);
 
