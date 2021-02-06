@@ -42,3 +42,23 @@ const resultado = {
 console.log(resultado);
 
 export default App
+
+// Operador Spread con Arrays
+const frutasVerdes = [
+    'kiwi',
+    'uva',
+    'limon'
+]
+
+const frutasRojas = [
+    'manzana',
+    'fresa',
+    'sandia'
+]
+
+const frutas = [
+    ...frutasVerdes,
+    'pera',
+    ...frutasRojas
+]
+console.log(frutas);
