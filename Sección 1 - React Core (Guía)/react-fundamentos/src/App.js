@@ -1,41 +1,36 @@
 import React, {Component} from 'react';
 
-// Mutando el estado de componente con una función
-class Contador extends Component {
+// Usando operador Spread para pasar Props
+const Gato = (props) => (
+    <div>
+        <h1>Gato</h1>
+        <pre>
+            {JSON.stringify(props, null, 4)}
+        </pre>
+    </div>
+)
+
+class App extends Component {
     state = {
-        video: {
-            title: 'Super Video',
-            likes: 0
+        fuerza: 100,
+        vidasRestantes: 7
+    }
+    render() {
+        const otrosDatos = {
+            raza: 'Tropical',
+            peleasNocturnas: 300
         }
-    }
-
-    add = () => {
-        this.setState((state) => ({
-            video: {
-                ...state.video,
-                likes: state.video.likes + 1
-            }
-        }))
-    }
-
-    render () {
         return(
             <div>
-                <h1>
-                    {this.state.video.title}
-                </h1>
-                <button onClick={this.add}>
-                    Likes: ({this.state.video.likes})
-                </button>
+                <Gato
+                    name='Garfield'
+                    age='2 años'
+                    {...otrosDatos}
+                    {...this.state}
+                />
             </div>
         )
     }
 }
-
-const App = () => (
-    <div>
-        <Contador/>
-    </div>
-)
 
 export default App
