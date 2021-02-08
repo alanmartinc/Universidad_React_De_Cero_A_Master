@@ -1,40 +1,30 @@
 import React, {Component} from 'react';
-import './global.css'
 
-// Crear eventos personalizados con React
-class Hijo extends Component {
-    manejadorClick = () => {
-        this.props.onSaluda('Ninja en React')
-    }
-    render() {
-        return(
-            <div className='box blue'>
-                <h2>Hijo</h2>
-                <button onClick={this.manejadorClick}>
-                    Saluda
-                </button>
+// Renderizados condicionales con React
+const Saludo = (props) => {
+    return(
+        <div>
+            <div>
+                {props.name && <strong>{props.name}</strong>}
             </div>
-        )
-    }
+
+            {props.saluda
+                ? (
+                    <h1>Hola, tu eres genial!</h1>
+                )
+
+                : (
+                    <p>Wops, no hay saludos para ti!</p>
+                )
+            }
+        </div>
+    )
 }
 
-class App extends Component {
-    state = {
-        name: ''
-    }
-    manejador = (name) => {
-        this.setState({name})
-    }
-    render() {
-        return(
-            <div className='box red'>
-                <Hijo onSaluda={this.manejador}/>
-                <h1>
-                    Nombre: {this.state.name}
-                </h1>
-            </div>
-        )
-    }
-}
+const App = () => (
+    <div>
+        <Saludo saluda={true} name='Ninja Pro'/>
+    </div>
+)
 
 export default App
