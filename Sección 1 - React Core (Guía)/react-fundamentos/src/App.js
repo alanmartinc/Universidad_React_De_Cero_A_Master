@@ -1,67 +1,38 @@
 import React, {Component} from 'react'
-import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
 
-// Entendiendo los portals de React
-class PortalModal extends Component {
+// Controlar los datos de entrada con prop-types
+class Profile extends Component {
+    static propTypes = {
+        name: PropTypes.string.isRequired,
+        bio: PropTypes.string,
+        email: PropTypes.string,
+        age: PropTypes.number
+    }
     render() {
-        if (!this.props.visible) {
-            return null
-        }
+        const { name, bio, email} = this.props
 
-        const styles = {
-            width: '100%',
-            height: '100%',
-            position: 'absolute',
-            top: '0',
-            left: '0',
-            background: 'linear-gradient(to top right, #667eea, #764ba2',
-
-        }
-
-        return ReactDOM.createPortal((
-            <div style={styles}>
-                {this.props.children}
+        return (
+            <div>
+                <h1>{name}</h1>
+                <p>{bio}</p>
+                <a href={`mailto:${email}`}>
+                    {email}
+                </a>
             </div>
-        ), document.getElementById('modal-root')) 
+        )
     }
 }
 
 class App extends Component {
-    state = {
-        visible: false,
-        num: 0
-    }
-
-    componentDidMount() {
-        setInterval(() => {
-            this.setState(state => ({
-                num: state.num + 1
-            }))
-        }, 1000)
-    }
-
-    mostrar = () => {
-        this.setState({visible: true})
-    }
-
-    cerrar = () => {
-        this.setState({visible: false})
-    }
-
     render() {
         return(
             <div>
-                <button onClick={this.mostrar}>
-                    Mostrar
-                </button>
-                <PortalModal visible={this.state.visible}>
-                    <button onClick={this.cerrar}>
-                        Cerrar
-                    </button>
-                    <h1>
-                        Hola desde un PortalModal {this.state.num}
-                    </h1>
-                </PortalModal>
+                <Profile
+                    name='Alan Cabot'
+                    bio='Soy un desarrollador Frontend'
+                    email='my-email@mail.com'
+                />
             </div>
         )
     }
