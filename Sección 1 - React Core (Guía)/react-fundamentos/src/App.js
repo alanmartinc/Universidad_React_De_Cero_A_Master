@@ -1,30 +1,26 @@
 import React, {Component} from 'react';
 
-// Renderizados condicionales con React
-const Saludo = (props) => {
-    return(
-        <div>
+// Inyectando HTML en marcado de componente con React
+class App extends Component {
+    state = {
+        marcado: `
+            <h1>Inyectando HTML con React</h1>
+            <br/>
+            <hr/>
+            <a href="#">Algun Link</a>
+        `
+    }
+
+    render() {
+        return(
             <div>
-                {props.name && <strong>{props.name}</strong>}
+                <div dangerouslySetInnerHTML={{
+                    __html: this.state.marcado
+                }}>                 
+                </div>
             </div>
-
-            {props.saluda
-                ? (
-                    <h1>Hola, tu eres genial!</h1>
-                )
-
-                : (
-                    <p>Wops, no hay saludos para ti!</p>
-                )
-            }
-        </div>
-    )
+        )
+    }
 }
-
-const App = () => (
-    <div>
-        <Saludo saluda={true} name='Ninja Pro'/>
-    </div>
-)
 
 export default App
