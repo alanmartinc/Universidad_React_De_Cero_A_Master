@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 
+const noop = () => {}
+
 // Controlar los datos de entrada con prop-types
 class Profile extends Component {
     static propTypes = {
@@ -9,6 +11,17 @@ class Profile extends Component {
         email: PropTypes.string,
         age: PropTypes.number
     }
+
+    // Datos de entrada por defecto con defaultProps
+    static defaultProps = {
+        name: 'Ninja PRO',
+        onHello: noop
+    }
+
+    saluda = () => {
+        this.props.onHello()
+    }
+
     render() {
         const { name, bio, email} = this.props
 
@@ -19,6 +32,9 @@ class Profile extends Component {
                 <a href={`mailto:${email}`}>
                     {email}
                 </a>
+                <button onClick={this.saluda}>
+                    Saluda
+                </button>
             </div>
         )
     }
@@ -29,7 +45,6 @@ class App extends Component {
         return(
             <div>
                 <Profile
-                    name='Alan Cabot'
                     bio='Soy un desarrollador Frontend'
                     email='my-email@mail.com'
                 />
