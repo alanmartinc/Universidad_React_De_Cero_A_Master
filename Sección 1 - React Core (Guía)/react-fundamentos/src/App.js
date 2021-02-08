@@ -1,33 +1,32 @@
 import React, {Component} from 'react';
 
-// Usando operador Spread para pasar Props
-const Gato = (props) => (
-    <div>
-        <h1>Gato</h1>
-        <pre>
-            {JSON.stringify(props, null, 4)}
-        </pre>
-    </div>
-)
-
+// Manejando eventos de mouse
+const styles = {
+    height: '200px',
+    background: 'gold',
+    padding: '1em',
+    boxSizing: 'border-box'
+}
 class App extends Component {
     state = {
-        fuerza: 100,
-        vidasRestantes: 7
+        x: 0,
+        y: 0
+    }
+    manejador = (event) => {
+        this.setState({
+            x: event.clientX,
+            y: event.clientY
+        })
     }
     render() {
-        const otrosDatos = {
-            raza: 'Tropical',
-            peleasNocturnas: 300
-        }
         return(
-            <div>
-                <Gato
-                    name='Garfield'
-                    age='2 años'
-                    {...otrosDatos}
-                    {...this.state}
-                />
+            <div style={styles} onMouseMove={this.manejador}>
+                <div>
+                    x: {this.state.x}
+                </div>
+                <div>
+                    y: {this.state.y}
+                </div>
             </div>
         )
     }
