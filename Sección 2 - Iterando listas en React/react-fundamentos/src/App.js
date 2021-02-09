@@ -1,26 +1,22 @@
 import React, {Component} from 'react'
 
-// Iterando propiedades de Objetos
+// Prop Key al iterar listas con React
+const users = [
+    {id: 1, name: 'Gerardo', country: 'Mexico', edad: 35},
+    {id: 2, name: 'Alan', country: 'Argentina', edad: 24},
+    {id: 3, name: 'Piter', country: 'Estados Unidos', edad: 18},
+    {id: 4, name: 'Jhun', country: 'China', edad: 45}
+] 
+
 class App extends Component {
-    state = {
-        user: {
-            name: 'Gerardo',
-            country: 'Mexico',
-            twitter: '@luxfenix'
-        }
-    }
-
     render() {
-        const {user} = this.state
-        const keys = Object.keys(user)
-
         return(
             <div>
-                <h3>Iterando propiedades de objetos</h3>
+                <h1>Iterando</h1>
                 <ul>
-                    {keys.map(key => (
-                        <li>
-                            <strong>{key}:</strong>{user[key]}
+                    {users.map((user) => (
+                        <li key={user.id}>
+                            {user.name}
                         </li>
                     ))}
                 </ul>
