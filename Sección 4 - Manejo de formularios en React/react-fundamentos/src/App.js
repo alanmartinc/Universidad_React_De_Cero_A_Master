@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
 
-// Manejando (inputs controlados) con React
+// Propagación de datos con inputs controlados
+const Unicorn = () => (
+  <span role="img" aria-label="unicornio">🦄</span>
+)
+
 class InputControlado extends Component {
   state = {
     text: '',
-    tieneError: false,
     color: '#E8E8E8'
   }
 
@@ -16,11 +19,14 @@ class InputControlado extends Component {
       color = '#E8E8E8'
     }
 
-    if(text.trim() !== '' && text.trim().length < 5) {
+    if(text.trim() !== '' && text.length < 5) {
       color = 'red'
     }
-    
+
     this.setState({text, color})
+
+    // Propagando datos al padre
+    this.props.onChange(this.props.name, text)
   }
 
   render() {
@@ -29,24 +35,46 @@ class InputControlado extends Component {
       padding: '0.3em 0.6em',
       outline: 'none'
     }
-
     return(
-      <input 
-      type="text" 
-      value={this.state.text} 
-      onChange={this.actualizar}
-      style={styles}
-      ></input>
+      <input
+        type='text'
+        value={this.state.text}
+        onChange={this.actualizar}
+        style={styles}
+        placeholder={this.props.placeholder}
+      />
     )
   }
 }
 
 class App extends Component {
+  state = {
+    name: '',
+    email: ''
+  }
+
+  actualizar = (name, text) => {
+    this.setState({
+      [name]: text
+    })
+  }
+  
   render() {
     return(
       <div>
-        <h1>Inputs controlados con React 🦄</h1>
-        <InputControlado/>
+        <h1>Input Controlado <Unicorn/></h1>
+        <InputControlado
+          onChange={this.actualizar}
+          placeholder="Nombre Completo"
+          name="name"
+        />
+        <InputControlado
+          onChange={this.actualizar}
+          placeholder="Tu Email"
+          name="email"
+        />
+        <h2>Nombre: {this.state.name}</h2>
+        <h2>Email: {this.state.email}</h2>
       </div>
     )
   }
