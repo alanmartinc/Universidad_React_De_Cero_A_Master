@@ -1,80 +1,62 @@
 import React, { Component } from 'react'
 
-// Propagación de datos con inputs controlados
+// Ejemplo de formulario con opciones de Selección
 const Unicorn = () => (
   <span role="img" aria-label="unicornio">🦄</span>
 )
 
-class InputControlado extends Component {
-  state = {
-    text: '',
-    color: '#E8E8E8'
-  }
+class InpuntNoContolado extends Component {
+  handleSubmit = (event) => {
 
-  actualizar = (event) => {
-    const text = event.target.value
-    let color = 'green'
+    event.preventDefault()
 
-    if(text.trim() === '') {
-      color = '#E8E8E8'
-    }
+    const nombre = event.target[0].value
+    const email = event.target[1].value
 
-    if(text.trim() !== '' && text.length < 5) {
-      color = 'red'
-    }
-
-    this.setState({text, color})
-
-    // Propagando datos al padre
-    this.props.onChange(this.props.name, text)
+    // Manejo de datos
+    this.props.onSend({nombre, email})
   }
 
   render() {
-    const styles = {
-      border: `1px solid ${this.state.color}`,
-      padding: '0.3em 0.6em',
-      outline: 'none'
-    }
     return(
-      <input
-        type='text'
-        value={this.state.text}
-        onChange={this.actualizar}
-        style={styles}
-        placeholder={this.props.placeholder}
-      />
+      <form onSubmit={this.handleSubmit}>
+        <p>
+          <label htmlFor="name">Nombre:</label>
+          <input
+            type="text"
+            placeholder="Nombre"
+            id="name"
+          />
+        </p>
+        <p>
+          <label>Email:</label>
+          <input
+            type="text"
+            placeholder="Email"
+          />
+        </p>
+        <button>
+          Enviar
+        </button>
+      </form>
     )
   }
 }
 
 class App extends Component {
-  state = {
-    name: '',
-    email: ''
+  send = (data) => {
+    console.log(data)
   }
 
-  actualizar = (name, text) => {
-    this.setState({
-      [name]: text
-    })
-  }
-  
   render() {
     return(
       <div>
-        <h1>Input Controlado <Unicorn/></h1>
-        <InputControlado
-          onChange={this.actualizar}
-          placeholder="Nombre Completo"
-          name="name"
+        <h1>
+          Atributo ref <Unicorn/>
+        </h1>
+        <InpuntNoContolado
+          onSend={this.send}
         />
-        <InputControlado
-          onChange={this.actualizar}
-          placeholder="Tu Email"
-          name="email"
-        />
-        <h2>Nombre: {this.state.name}</h2>
-        <h2>Email: {this.state.email}</h2>
       </div>
     )
   }
