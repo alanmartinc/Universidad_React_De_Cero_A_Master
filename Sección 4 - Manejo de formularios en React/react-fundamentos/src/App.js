@@ -1,47 +1,35 @@
 import React, { Component } from 'react'
 
-// Ejemplo de formulario con opciones de Selección Múltiple
+// Ejemplo de Input Checkbox
 const Unicorn = () => (
   <span role="img" aria-label="unicornio">🦄</span>
 )
 
 class App extends Component {
   state = {
-    techs: ['Vue']
+    active: true
   }
 
   handleChange = (event) => {
-    const techs = Array.from(
-      event.target.selectedOptions,
-      (option) => option.value
-    )
-
-    this.setState({techs})
+    this.setState({
+      active: event.target.checked
+    })
   }
 
   render() {
+    const {active} = this.state
     return(
       <div>
-        <h1>Etiqueta Select <Unicorn/></h1>
         <form>
-          <select
-            value={this.state.techs}
-            onChange={this.handleChange}
-            multiple
-          >
-            <option value="Angular">Angular</option>
-            <option value="React">React</option>
-            <option value="Vue">Vue</option>
-            <option value="Vanilla">Vanilla</option>
-          </select>
+          <input
+            type="checkbox"
+            checked={active}
+            onChange={this.handleChange}  
+          />
         </form>
-        <ul>
-          {this.state.techs.map(tech => (
-            <li key={tech}>
-              {tech}
-            </li>
-          ))}
-        </ul>
+        {active && (
+          <h1>Etiqueta Checkbox <Unicorn/></h1>
+        )}
       </div>
     )
   }
