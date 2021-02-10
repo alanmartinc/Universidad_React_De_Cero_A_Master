@@ -5,58 +5,32 @@ const Unicorn = () => (
   <span role="img" aria-label="unicornio">🦄</span>
 )
 
-class InpuntNoContolado extends Component {
-  handleSubmit = (event) => {
-
-    event.preventDefault()
-
-    const nombre = event.target[0].value
-    const email = event.target[1].value
-
-    // Manejo de datos
-    this.props.onSend({nombre, email})
-  }
-
-  render() {
-    return(
-      <form onSubmit={this.handleSubmit}>
-        <p>
-          <label htmlFor="name">Nombre:</label>
-          <input
-            type="text"
-            placeholder="Nombre"
-            id="name"
-          />
-        </p>
-        <p>
-          <label>Email:</label>
-          <input
-            type="text"
-            placeholder="Email"
-          />
-        </p>
-        <button>
-          Enviar
-        </button>
-      </form>
-    )
-  }
-}
-
 class App extends Component {
-  send = (data) => {
-    console.log(data)
+  state = {
+    tech: 'Vue'
+  }
+
+  handleChange = (event) => {
+    this.setState({
+      tech: event.target.value
+    })
   }
 
   render() {
     return(
       <div>
         <h1>
-          Atributo ref <Unicorn/>
+          Etiqueta Select <Unicorn/>
+          {this.state.tech}
         </h1>
-        <InpuntNoContolado
-          onSend={this.send}
-        />
+        <form>
+          <select value={this.state.tech} onChange={this.handleChange}>
+            <option value="Angular">Angular</option>
+            <option value="React">React</option>
+            <option value="Vue">Vue</option>
+            <option value="Vanilla">Vanilla</option>
+          </select>
+        </form>
       </div>
     )
   }
