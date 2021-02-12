@@ -1,35 +1,56 @@
 import React, { Component } from 'react'
 
-// Ejemplo de Input Checkbox
-const Unicorn = () => (
-  <span role="img" aria-label="unicornio">🦄</span>
-)
-
-class App extends Component {
+// Manejo y limite de errores dentro de componentes
+class Boton extends Component {
   state = {
-    active: true
+    dispararError: false
   }
 
-  handleChange = (event) => {
-    this.setState({
-      active: event.target.checked
-    })
+  dispachError = () => {
+    this.setState({dispararError: true})
   }
 
   render() {
-    const {active} = this.state
+    if(this.state.dispararError){
+      throw new Error('Lo siento he fallado')
+    }
+
+    return(
+      <button onClick={this.dispachError}>
+        Boton con Bugg
+      </button>
+    )
+  }
+}
+
+class LimiteErrores extends Component {
+  state = {
+    tieneError: false
+  }
+
+  componentDidCatch() {
+    this.setState({tieneError: true})
+  }
+
+  render() {
+    if(this.state.tieneError) {
+      return(
+        <div>
+          Wops! Algo ha salido mal, puedes recargar o contactar con el equipo de soporte.
+        </div>
+      )
+    }
+
+    return this.props.children
+  }
+}
+class App extends Component {
+  render() {
     return(
       <div>
-        <form>
-          <input
-            type="checkbox"
-            checked={active}
-            onChange={this.handleChange}  
-          />
-        </form>
-        {active && (
-          <h1>Etiqueta Checkbox <Unicorn/></h1>
-        )}
+        <LimiteErrores>
+          <Boton/>
+        </LimiteErrores>
       </div>
     )
   }
