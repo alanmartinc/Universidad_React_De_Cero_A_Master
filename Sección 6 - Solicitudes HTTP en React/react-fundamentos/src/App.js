@@ -1,56 +1,37 @@
 import React, { Component } from 'react'
 
-// Manejo y limite de errores dentro de componentes
-class Boton extends Component {
-  state = {
-    dispararError: false
-  }
-
-  dispachError = () => {
-    this.setState({dispararError: true})
-  }
-
-  render() {
-    if(this.state.dispararError){
-      throw new Error('Lo siento he fallado')
-    }
-
-    return(
-      <button onClick={this.dispachError}>
-        Boton con Bugg
-      </button>
-    )
-  }
-}
-
-class LimiteErrores extends Component {
-  state = {
-    tieneError: false
-  }
-
-  componentDidCatch() {
-    this.setState({tieneError: true})
-  }
-
-  render() {
-    if(this.state.tieneError) {
-      return(
-        <div>
-          Wops! Algo ha salido mal, puedes recargar o contactar con el equipo de soporte.
-        </div>
-      )
-    }
-
-    return this.props.children
-  }
-}
+// Haciendo una llamada a un API Rest con React
 class App extends Component {
+  state = {
+    users: [],
+    cargando: true
+  }
+
+  componentDidMount() {
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then(res => res.json())
+      .then(users => this.setState({users, cargando: false}))
+  }
+
   render() {
+    if(this.state.cargando) {
+      return <h1>Cargando...</h1>
+    }
+
     return(
       <div>
-        <LimiteErrores>
-          <Boton/>
-        </LimiteErrores>
+        <h1>Peticion HTTP</h1>
+        <h2>{this.state.text}</h2>
+        <ul>
+          {this.state.users.map(user => (
+            <li key={user.id}>
+              {user.name}
+              <a href={`http://${user.website}`}>
+                Website
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
     )
   }
