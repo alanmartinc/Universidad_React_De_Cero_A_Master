@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 
-// Solución a Tarea (buscador de películas)
+// Integrar libreria Axios para hacer solicitudes HTTP
 class App extends Component {
   state = {
     movie: {},
@@ -14,9 +15,13 @@ class App extends Component {
 
     const title = event.target[0].value
     const url = 'http://www.omdbapi.com/?i=tt3896198&apikey=5c24385e'
-    fetch(url + '&t=' + title)
-      .then(res => res.json())
-      .then(movie => this.setState({movie, isFetching: false}))
+
+    axios.get(url, {
+      params: {
+        t: title
+      }
+    })
+      .then(res => this.setState({movie: res.data, isFetching: false}))
   }
 
   render() {
@@ -33,7 +38,7 @@ class App extends Component {
         {isFetching && (
           <h2>Cargando...</h2>
         )}
-        {movie.Title && (
+        {movie.Title && !isFetching &&(
           <div>
             <h1>{movie.Title}</h1>
             <p>{movie.Plot}</p>
