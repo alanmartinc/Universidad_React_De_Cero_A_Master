@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 
-// Integrar libreria Axios para hacer solicitudes HTTP
+// Usando Async Await para solicitudes HTTP
 class App extends Component {
   state = {
     movie: {},
     isFetching: false
   }
 
-  handleSubmit = (event) => {
+  handleSubmit = async (event) => {
     event.preventDefault()
 
     this.setState({isFetching: true})
@@ -16,12 +16,13 @@ class App extends Component {
     const title = event.target[0].value
     const url = 'http://www.omdbapi.com/?i=tt3896198&apikey=5c24385e'
 
-    axios.get(url, {
-      params: {
-        t: title
-      }
+    const res = await fetch(url + '&t=' + title)
+    const movie  = await res.json()
+    
+    this.setState({
+      movie,
+      isFetching:false
     })
-      .then(res => this.setState({movie: res.data, isFetching: false}))
   }
 
   render() {
