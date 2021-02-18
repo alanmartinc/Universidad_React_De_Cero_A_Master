@@ -1,37 +1,40 @@
 import React, { Component } from 'react'
 
-// Haciendo una llamada a un API Rest con React
+// Ejemplo buscador de peliculas
 class App extends Component {
   state = {
-    users: [],
-    cargando: true
+    movie: {}
   }
 
-  componentDidMount() {
-    fetch('https://jsonplaceholder.typicode.com/users')
+  handleSubmit = (event) => {
+    event.preventDefault()
+    const title = event.target[0].value
+    const url = 'http://www.omdbapi.com/?i=tt3896198&apikey=5c24385e'
+    fetch(url + '&t=' + title)
       .then(res => res.json())
-      .then(users => this.setState({users, cargando: false}))
+      .then(movie => this.setState({movie}))
   }
 
   render() {
-    if(this.state.cargando) {
-      return <h1>Cargando...</h1>
-    }
+    const {movie} = this.state
 
     return(
       <div>
-        <h1>Peticion HTTP</h1>
-        <h2>{this.state.text}</h2>
-        <ul>
-          {this.state.users.map(user => (
-            <li key={user.id}>
-              {user.name}
-              <a href={`http://${user.website}`}>
-                Website
-              </a>
-            </li>
-          ))}
-        </ul>
+        <form onSubmit={this.handleSubmit}>
+          <input type="text" placeholder="Nombre de Pelicula"></input>
+          <button>
+            Buscar
+          </button>
+        </form>
+        <h1>{movie.Title}</h1>
+        <p>{movie.Plot}</p>
+        <img 
+          src={movie.Poster} 
+          alt="Poster"
+          style={{
+            width: '150px'
+          }}>
+        </img>
       </div>
     )
   }
