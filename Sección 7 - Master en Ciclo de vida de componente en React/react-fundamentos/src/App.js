@@ -1,57 +1,45 @@
 import React, { Component } from 'react'
-import axios from 'axios'
 
-// Usando Async Await para solicitudes HTTP
-class App extends Component {
-  state = {
-    movie: {},
-    isFetching: false
+// El metodo constructor
+class Contador extends Component {
+  constructor(props) {
+    super(props)
+
+    this.agregar = this.agregar.bind(this)
+
+    this.title = React.createRef()
+
+    this.state = {
+      num: this.props.num
+    }
   }
 
-  handleSubmit = async (event) => {
-    event.preventDefault()
+  agregar() {
+    console.log(this.title)
 
-    this.setState({isFetching: true})
-
-    const title = event.target[0].value
-    const url = 'http://www.omdbapi.com/?i=tt3896198&apikey=5c24385e'
-
-    const res = await fetch(url + '&t=' + title)
-    const movie  = await res.json()
-    
-    this.setState({
-      movie,
-      isFetching:false
-    })
+    this.setState(state => ({
+      num: state.num + 1
+    }))
   }
 
   render() {
-    const {movie, isFetching} = this.state
-
     return(
       <div>
-        <form onSubmit={this.handleSubmit}>
-          <input type="text" placeholder="Nombre de Pelicula"></input>
-          <button>
-            Buscar
-          </button>
-        </form>
-        {isFetching && (
-          <h2>Cargando...</h2>
-        )}
-        {movie.Title && !isFetching &&(
-          <div>
-            <h1>{movie.Title}</h1>
-            <p>{movie.Plot}</p>
-            <img 
-              src={movie.Poster} 
-              alt="Poster"
-              style={{
-                width: '150px'
-              }}>
-            </img>
-          </div>
-        )}
+        <h2 ref={this.title}>{this.state.message}</h2>
+        <button onClick={this.agregar}>
+          Click({this.state.num})
+        </button>
+      </div>
+    )
+  }
+}
+
+class App extends Component {
+  render() {
+    return(
+      <div>
+        <h1>Metodo constructor</h1>
+        <Contador num={1200}/>
       </div>
     )
   }
