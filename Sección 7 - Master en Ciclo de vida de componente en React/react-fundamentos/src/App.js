@@ -1,64 +1,78 @@
 import React, { Component } from 'react'
 
-// El metodo componentDidMount
-class Http extends Component {
+// El metodo componentDidUpdate
+class UserDetails extends Component {
   state = {
-    photos: []
+    user: {},
+    isFetching: false
   }
 
   componentDidMount() {
-    // Solicitudes HTTP
-    fetch('https://jsonplaceholder.typicode.com/photos')
+    this.fetchData()
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(prevProps.userId !== this.props.userId) {
+      this.fetchData()
+    }
+  }
+
+  fetchData = () => {
+    this.setState({
+      isFetching: true
+    })
+
+    const URL = 'https://jsonplaceholder.typicode.com/users/' + this.props.userId
+
+    fetch(URL)
       .then(res => res.json())
-      .then(photos => this.setState({photos}))
+      .then(user => this.setState({user, isFetching: false}))
   }
 
   render() {
-    const {photos} = this.state
-
     return(
       <div>
-        {photos.map(photo => (
-          <img 
-            key={photo.id}
-            src={photo.thumbnaiUrl}
-            alt={photo.title}
-          />
-        ))}
-      </div>
-    )
-  }
-}
+        <h2>User Details</h2>
+        {this.state.isFetching
 
-class Events extends Component {
-  state = {
-    width: window.innerWidth
-  }
+        ? <h1>Cargando...</h1>
 
-  componentDidMount() {
-    window.addEventListener('resize', this.handleResize)
-  }
-  
-  handleResize = () => {
-    this.setState({width: window.innerWidth})
-  }
+        : (
+            <pre>
+              {JSON.stringify(this.state.user, null, 4)}
+            </pre>
+          )
 
-  render(){
-    return(
-      <div>
-        <h2>Events {this.state.width}</h2>
+        }
       </div>
     )
   }
 }
 
 class App extends Component {
+  state = {
+    id: 1
+  }
+
+  aumentar = () => {
+    this.setState(state => ({
+      id: state.id + 1
+    }))
+  }
+
   render() {
+    const {id} = this.state
+
     return(
       <div>
-        <h1>Metodo componentDidMount</h1>
-        <Http/>
-        <Events/>
+        <h1>Metodo componentDidUpdate</h1>
+        <h2>ID: {id}</h2>
+        <button onClick={this.aumentar}>
+          Aumentar
+        </button>
+        <UserDetails
+          userId={id}
+        />
       </div>
     )
   }
