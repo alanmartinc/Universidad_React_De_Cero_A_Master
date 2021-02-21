@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^12.6.2",
     "axios": "^0.21.1",
     "chart.js": "^2.9.4",
+    "faker": "^5.4.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.1",

@@ -1,78 +1,94 @@
 import React, { Component } from 'react'
+import faker from 'faker' 
 
-// El metodo componentDidUpdate
-class UserDetails extends Component {
-  state = {
-    user: {},
-    isFetching: false
-  }
+const chatStyle = {
+  width: 230,
+  height: 300,
+  border: '1px solid gray',
+  overflow: 'auto',
+  fontFamily: 'monospace'
+}
 
-  componentDidMount() {
-    this.fetchData()
-  }
+const messageStyle = {
+  padding: '1em',
+  borderBottom: '1px solid #DDD'
+}
 
-  componentDidUpdate(prevProps, prevState) {
-    if(prevProps.userId !== this.props.userId) {
-      this.fetchData()
+const avatarStyle = {
+  width: 50,
+  height: 50,
+  borderRadius: '50%'
+}
+
+class Chat extends Component {
+  box = React.createRef()
+
+  getSnapshotBeforeUpdate() {
+    const box = this.box.current
+    if(box.scrollTop + box.offsetHeight >= box.scrollHeight) {
+      return true
     }
+    return false
   }
 
-  fetchData = () => {
-    this.setState({
-      isFetching: true
-    })
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const box = this.box.current
 
-    const URL = 'https://jsonplaceholder.typicode.com/users/' + this.props.userId
-
-    fetch(URL)
-      .then(res => res.json())
-      .then(user => this.setState({user, isFetching: false}))
+    if(snapshot) {
+      box.scrollTop = box.scrollHeight
+    }
+    
   }
 
-  render() {
+  render() { 
     return(
-      <div>
-        <h2>User Details</h2>
-        {this.state.isFetching
-
-        ? <h1>Cargando...</h1>
-
-        : (
-            <pre>
-              {JSON.stringify(this.state.user, null, 4)}
-            </pre>
-          )
-
-        }
+      <div style={chatStyle} ref={this.box}>
+        {this.props.list.map(item => (
+          <div key={item.id} style={messageStyle}>
+            <p>{item.message}</p>
+            <div>
+              {item.name}
+            </div>
+            <img src={item.avatar} alt="Avatar" style={avatarStyle}/>
+          </div>
+        ))}
       </div>
-    )
+    );
   }
 }
 
+// El metodo getSnapshotBeforeUpdate
 class App extends Component {
   state = {
-    id: 1
+    list: []
   }
 
-  aumentar = () => {
+  addMessage = () => {
+    // Crear mensaje falso
+    const message = {
+      id: faker.random.uuid(),
+      name: faker.name.findName(),
+      avatar: faker.image.avatar(),
+      message:faker.hacker.phrase()
+    }
+
+    console.log(message)
+
+    // Agregarlo a la lista
     this.setState(state => ({
-      id: state.id + 1
+      list: [
+        ...state.list,
+        message
+      ]
     }))
   }
 
   render() {
-    const {id} = this.state
-
     return(
       <div>
-        <h1>Metodo componentDidUpdate</h1>
-        <h2>ID: {id}</h2>
-        <button onClick={this.aumentar}>
-          Aumentar
-        </button>
-        <UserDetails
-          userId={id}
-        />
+        <h1>Metodo getSnapshotBeforeUpdate</h1>
+        <Chat list={this.state.list}/>
+        <button onClick={this.addMessage}>New Message</button>
       </div>
     )
   }
