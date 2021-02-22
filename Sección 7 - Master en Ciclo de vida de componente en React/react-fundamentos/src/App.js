@@ -1,94 +1,63 @@
 import React, { Component } from 'react'
-import faker from 'faker' 
 
-const chatStyle = {
-  width: 230,
-  height: 300,
-  border: '1px solid gray',
-  overflow: 'auto',
-  fontFamily: 'monospace'
-}
-
-const messageStyle = {
-  padding: '1em',
-  borderBottom: '1px solid #DDD'
-}
-
-const avatarStyle = {
-  width: 50,
-  height: 50,
-  borderRadius: '50%'
-}
-
-class Chat extends Component {
-  box = React.createRef()
-
-  getSnapshotBeforeUpdate() {
-    const box = this.box.current
-    if(box.scrollTop + box.offsetHeight >= box.scrollHeight) {
-      return true
-    }
-    return false
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    const box = this.box.current
-
-    if(snapshot) {
-      box.scrollTop = box.scrollHeight
-    }
-    
-  }
-
-  render() { 
-    return(
-      <div style={chatStyle} ref={this.box}>
-        {this.props.list.map(item => (
-          <div key={item.id} style={messageStyle}>
-            <p>{item.message}</p>
-            <div>
-              {item.name}
-            </div>
-            <img src={item.avatar} alt="Avatar" style={avatarStyle}/>
-          </div>
-        ))}
-      </div>
-    );
-  }
-}
-
-// El metodo getSnapshotBeforeUpdate
-class App extends Component {
+// El metodo getDerivedStateFromProps
+class Contador extends Component {
   state = {
-    list: []
+    num: this.props.num
   }
 
-  addMessage = () => {
-    // Crear mensaje falso
-    const message = {
-      id: faker.random.uuid(),
-      name: faker.name.findName(),
-      avatar: faker.image.avatar(),
-      message:faker.hacker.phrase()
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if(prevState.num < nextProps.num) {
+      return {
+        num: nextProps.num
+      }
     }
+  }
 
-    console.log(message)
-
-    // Agregarlo a la lista
+  add = () => {
     this.setState(state => ({
-      list: [
-        ...state.list,
-        message
-      ]
+      num: state.num + 1
     }))
   }
 
-  render() {
+  render() { 
+    const {num} = this.state
+
     return(
       <div>
-        <h1>Metodo getSnapshotBeforeUpdate</h1>
-        <Chat list={this.state.list}/>
-        <button onClick={this.addMessage}>New Message</button>
+        <hr/>
+        <button onClick={this.add}>
+          Clicks ({num})
+        </button>
+      </div>
+    )
+  }
+}
+
+class App extends Component {
+  state = {
+    numero: 0
+  }
+
+  handleChange = (e) => {
+    let numero = parseInt(e.target.value)
+
+    if(isNaN(numero)) {
+      numero = 0
+    }
+
+    this.setState({numero})
+  }
+
+  render() {
+    const {numero} = this.state
+
+    return(
+      <div>
+        <h1>Metodo getDerivedStateFromProps</h1>
+        <h2>{numero}</h2>
+        <input type="text" onChange={this.handleChange}></input>
+        <Contador num={numero}/>
       </div>
     )
   }
