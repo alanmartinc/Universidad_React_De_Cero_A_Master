@@ -1,26 +1,25 @@
-import React, { Component } from 'react'
+import React, { Component, PureComponent } from 'react'
 
-// El metodo shouldComponentUpdate
+// PureComponent
 const itemStyles = {
   padding: '1em',
   borderBottom: '1px solid #ccc',
   marginTop: '0.4em'
 }
 
-class Item extends Component {
+class Item extends PureComponent {
   handleClick = () => {
     this.props.onRemove(this.props.item)
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if(nextProps.item.id !==  this.props.item.id) {
-      return true 
-    }
-    return false
-  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   return nextProps.item.id !==  this.props.item.id
+  // }
 
   render() {
     const {item} = this.props
+
+    console.log('je' + item.text)
 
     return(
       <div style={itemStyles}>
@@ -67,7 +66,7 @@ class App extends Component {
   render() {
     return(
       <div>
-        <h1>Metodo shouldComponentUpdate</h1>
+        <h1>PureComponent</h1>
         <form onSubmit={this.agregar}>
           <input type="text" placeholder="Ingresa tu pendiente"/>
           <button>Agregar</button>
