@@ -1,34 +1,35 @@
 import React, { Component } from 'react'
 
-// El metodo getDerivedStateFromProps
-class Contador extends Component {
-  state = {
-    num: this.props.num
+// El metodo shouldComponentUpdate
+const itemStyles = {
+  padding: '1em',
+  borderBottom: '1px solid #ccc',
+  marginTop: '0.4em'
+}
+
+class Item extends Component {
+  handleClick = () => {
+    this.props.onRemove(this.props.item)
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if(prevState.num < nextProps.num) {
-      return {
-        num: nextProps.num
-      }
+  shouldComponentUpdate(nextProps, nextState) {
+    if(nextProps.item.id !==  this.props.item.id) {
+      return true 
     }
+    return false
   }
 
-  add = () => {
-    this.setState(state => ({
-      num: state.num + 1
-    }))
-  }
-
-  render() { 
-    const {num} = this.state
+  render() {
+    const {item} = this.props
 
     return(
-      <div>
-        <hr/>
-        <button onClick={this.add}>
-          Clicks ({num})
+      <div style={itemStyles}>
+        <button onClick={this.handleClick}>
+          x
         </button>
+        <span>
+          {item.text}
+        </span>
       </div>
     )
   }
@@ -36,28 +37,46 @@ class Contador extends Component {
 
 class App extends Component {
   state = {
-    numero: 0
+    list: []
   }
 
-  handleChange = (e) => {
-    let numero = parseInt(e.target.value)
+  agregar = (e) => {
+    e.preventDefault()
+    const text = e.target[0].value
+    const id = Math.random().toString(16)
+    const pendiente = {text, id}
 
-    if(isNaN(numero)) {
-      numero = 0
-    }
+    this.setState(state => ({
+      list: [
+        ...state.list,
+        pendiente
+      ],
+    }))
 
-    this.setState({numero})
+    e.target[0].value = ''
+  }
+
+  eliminar = (item) => {
+    this.setState(state => ({
+      list: state.list.filter(_item => {
+        return item.id !== _item.id  
+      })
+    }))
   }
 
   render() {
-    const {numero} = this.state
-
     return(
       <div>
-        <h1>Metodo getDerivedStateFromProps</h1>
-        <h2>{numero}</h2>
-        <input type="text" onChange={this.handleChange}></input>
-        <Contador num={numero}/>
+        <h1>Metodo shouldComponentUpdate</h1>
+        <form onSubmit={this.agregar}>
+          <input type="text" placeholder="Ingresa tu pendiente"/>
+          <button>Agregar</button>
+        </form>
+        <div>
+          {this.state.list.map(item => (
+            <Item key={item.id} item={item} onRemove={this.eliminar}/>
+          ))}
+        </div>
       </div>
     )
   }
