@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
+import PubSub from 'pubsub-js'
 
-// Comunicación Parent Component (Hermanos)
+// Observer Pattern (Cualquiera)
 const Header = () => {
   const subtitleStyles = {
     fontWeight: 'bold'
@@ -18,10 +19,10 @@ const Header = () => {
   return(
     <header style={headerStyles}>
         <div>
-          (Hermanos)
+          (Cualquiera)
         </div>
         <div style={subtitleStyles}>
-          Parent Component
+          Observer Pattern
           <span role="image" aria="flame">
             🔥
           </span>
@@ -38,66 +39,71 @@ const boxStyles = {
   textAlign: 'center'
 }
 
-const blueStyles = {
-  ...boxStyles,
-  border: '1px solid blue'
-}
+class Bisnieto extends Component {
+  state = {
+    massage: '********'
+  }
+  componentDidMount () {
+    PubSub.subscribe('otro evento', (e, data) => {
+      this.setState({
+        massage: data.title
+      })
+    })
+  }
 
-const redStyles = {
-  ...boxStyles,
-  border: '1px solid red'
-}
+  componentWillUnmount() {
+    PubSub.unsubscribe('otro evento')
+  }
 
-class ComponentA extends Component {
+  handleClick = () => {
+    PubSub.publish('saludo', 'Hola desde el Bisnieto')
+  }
+
   render() {
-    const {num} = this.props
-
     return(
-      <div style={blueStyles}>
-        <button onClick={this.props.onAdd}>Componen A ({num})</button>
+      <div style={boxStyles}>
+        <p>{this.state.massage}</p>
+        <button onClick={this.handleClick}>Nieto</button>
       </div>
     )
   }
 }
 
-class ComponentB extends Component {
+class Nieto extends Component {
   render() {
-    const {num} = this.props
-
     return(
-      <div style={redStyles}>
-        <button onClick={this.props.onAdd}>Componen B ({num})</button>
+      <div style={boxStyles}>
+        <Bisnieto/>
+      </div>
+    )
+  }
+}
+
+class Hijo extends Component {
+  render() {
+    return(
+      <div style={boxStyles}>
+        <Nieto/>
       </div>
     )
   }
 }
 
 class App extends Component {
-  state = {
-    countA: 0,
-    countB: 0
+  handleClick = () => {
+    PubSub.publish('otro evento', {
+      title: 'Hola desde <App/>'
+    })
   }
 
-  handleAddA = () => {
-    this.setState(state => ({
-      countA: state.countA + 1
-    }))
-  }
-
-  handleAddB = () => {
-    this.setState(state => ({
-      countB: state.countB + 2
-    }))
-  }
-  
   render() {
-    const {countA, countB} = this.state
-
     return(
       <div style={boxStyles}>
-          <Header/>
-          <ComponentA num={countA} onAdd={this.handleAddB}/>
-          <ComponentB num={countB} onAdd={this.handleAddA}/>
+        <button onClick={this.handleClick}>
+          Padre
+        </button>
+        <Header/>
+        <Hijo/>
       </div>
     )
   }
