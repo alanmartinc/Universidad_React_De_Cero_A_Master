@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
+import propTypes from 'prop-types'
 
-// Patrón Render Prop (Hijo a Padre)
+// Ejemplo de Patrón (Render Prop)
 const {Provider, Consumer} = React.createContext()
 
 const Header = () => {
@@ -23,7 +24,7 @@ const Header = () => {
           (Hijo a Padre)
         </div>
         <div style={subtitleStyles}>
-          Render Props
+          Ejemplo Render Props
           <span role="image" aria="flame">
             🔥
           </span>
@@ -40,49 +41,52 @@ const boxStyles = {
   textAlign: 'center'
 }
 
-class List extends Component {
-  render () {
-    const {list, render} = this.props
+class Resize extends Component {
+  static propTypes = {
+    render: propTypes.func.isRequired
+  }
 
-    return(
-      <div>
-        {list.map((item, index) => {
-          if (render) {
-            return render(item, index)
-          }
+  state = {
+    width: window.innerWidth,
+    height: window.innerHeight
+  }
 
-          return(
-            <li key={item.name}>
-              {item.name}
-            </li>
-          )
-        })}
-      </div>
-    )
+  componentDidMount() {
+    window.addEventListener('resize', this.handleResize)
+  }
+
+  componentWillMount() {
+    window.removeEventListener('resize', this.handleResize)
+  }
+
+  handleResize = () => {
+    this.setState({
+      width: window.innerWidth,
+      height: window.innerHeight
+    })
+  }
+
+  render() {
+    const {width, height} = this.state
+    const {render} = this.props
+
+    return render({width, height})
   }
 }
 
 class App extends Component {
-  state = {
-    fruits: [
-      {name: 'Fresa', price: 22},
-      {name: 'Mango', price: 18},
-      {name: 'Sandia', price: 24},
-      {name: 'Manzana', price: 12},
-    ]
-  }
-
   render() {
-    const {fruits} = this.state
-
     return(
       <div style={boxStyles}>
         <Header/>
-        <List list={fruits} render={(data, index) => (
-          <div>
-            {data.name} - ${data.price}
-          </div>
-        )}/>
+        <Resize render={({width, height}) => {
+          return(
+            <div>
+              <h1>Width: {width}</h1>
+              <li>{height}</li>
+            </div>
+          )
+        }}/>
       </div>
     )
   }
