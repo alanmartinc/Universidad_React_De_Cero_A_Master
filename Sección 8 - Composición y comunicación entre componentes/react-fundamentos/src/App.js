@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-// Comunicación Event Bubbling (Hijo a Padre)
+// Comunicación Parent Component (Hermanos)
 const Header = () => {
   const subtitleStyles = {
     fontWeight: 'bold'
@@ -18,10 +18,10 @@ const Header = () => {
   return(
     <header style={headerStyles}>
         <div>
-          (Hijo a Padre)
+          (Hermanos)
         </div>
         <div style={subtitleStyles}>
-          Event Bubbling
+          Parent Component
           <span role="image" aria="flame">
             🔥
           </span>
@@ -38,32 +38,66 @@ const boxStyles = {
   textAlign: 'center'
 }
 
-class Hijo extends Component {
-  handleClick = (e) => {
-    // e.stopPropagation()
-    e.saludo = 'Hola mensaje desde el Hijo'
-    console.log('Click en Hijo')
-  }
+const blueStyles = {
+  ...boxStyles,
+  border: '1px solid blue'
+}
 
+const redStyles = {
+  ...boxStyles,
+  border: '1px solid red'
+}
+
+class ComponentA extends Component {
   render() {
+    const {num} = this.props
+
     return(
-      <div style={boxStyles} onClick={this.handleClick}>
-        <p>Hijo</p>
+      <div style={blueStyles}>
+        <button onClick={this.props.onAdd}>Componen A ({num})</button>
+      </div>
+    )
+  }
+}
+
+class ComponentB extends Component {
+  render() {
+    const {num} = this.props
+
+    return(
+      <div style={redStyles}>
+        <button onClick={this.props.onAdd}>Componen B ({num})</button>
       </div>
     )
   }
 }
 
 class App extends Component {
-  handleClick = (e) => {
-    console.log('Click en Padre', e.saludo)
+  state = {
+    countA: 0,
+    countB: 0
   }
 
+  handleAddA = () => {
+    this.setState(state => ({
+      countA: state.countA + 1
+    }))
+  }
+
+  handleAddB = () => {
+    this.setState(state => ({
+      countB: state.countB + 2
+    }))
+  }
+  
   render() {
+    const {countA, countB} = this.state
+
     return(
-      <div style={boxStyles} onClick={this.handleClick}>
+      <div style={boxStyles}>
           <Header/>
-          <Hijo/>
+          <ComponentA num={countA} onAdd={this.handleAddB}/>
+          <ComponentB num={countB} onAdd={this.handleAddA}/>
       </div>
     )
   }
