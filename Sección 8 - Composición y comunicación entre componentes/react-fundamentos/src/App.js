@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-// Comunicación con API Context
+// Patrón Render Prop (Hijo a Padre)
 const {Provider, Consumer} = React.createContext()
 
 const Header = () => {
@@ -20,10 +20,10 @@ const Header = () => {
   return(
     <header style={headerStyles}>
         <div>
-          (Cualquiera)
+          (Hijo a Padre)
         </div>
         <div style={subtitleStyles}>
-          React API Context
+          Render Props
           <span role="image" aria="flame">
             🔥
           </span>
@@ -40,25 +40,23 @@ const boxStyles = {
   textAlign: 'center'
 }
 
-const Nieto = () => (
-  <Consumer>
-    {({addClicks, clicks}) => (
-      <div style={boxStyles}>
-        <p>Nieto</p>
-        <button onClick={addClicks}>
-          Disparar({clicks})
-        </button>
-      </div>
-    )}
-  </Consumer>
-)
+class List extends Component {
+  render () {
+    const {list, render} = this.props
 
-class Hijo extends Component {
-  render() {
     return(
-      <div style={boxStyles}>
-        <p>Hijo</p>
-        <Nieto/>
+      <div>
+        {list.map((item, index) => {
+          if (render) {
+            return render(item, index)
+          }
+
+          return(
+            <li key={item.name}>
+              {item.name}
+            </li>
+          )
+        })}
       </div>
     )
   }
@@ -66,26 +64,26 @@ class Hijo extends Component {
 
 class App extends Component {
   state = {
-    clicks: 0
-  }
-
-  addClicks = () => {
-    this.setState(state => ({
-      clicks: state.clicks + 1
-    }))
+    fruits: [
+      {name: 'Fresa', price: 22},
+      {name: 'Mango', price: 18},
+      {name: 'Sandia', price: 24},
+      {name: 'Manzana', price: 12},
+    ]
   }
 
   render() {
+    const {fruits} = this.state
+
     return(
-      <Provider value={{
-        clicks: this.state.clicks,
-        addClicks: this.addClicks
-      }}>
-        <div style={boxStyles}>
-          <Header/>
-          <Hijo/>
-        </div>
-      </Provider>
+      <div style={boxStyles}>
+        <Header/>
+        <List list={fruits} render={(data, index) => (
+          <div>
+            {data.name} - ${data.price}
+          </div>
+        )}/>
+      </div>
     )
   }
 }
