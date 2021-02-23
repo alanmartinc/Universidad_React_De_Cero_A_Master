@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PubSub from 'pubsub-js'
 
-// Observer Pattern (Cualquiera)
+// Variables Globales (Cualquiera)
 const Header = () => {
   const subtitleStyles = {
     fontWeight: 'bold'
@@ -22,7 +22,7 @@ const Header = () => {
           (Cualquiera)
         </div>
         <div style={subtitleStyles}>
-          Observer Pattern
+          Variables Globales
           <span role="image" aria="flame">
             🔥
           </span>
@@ -43,20 +43,11 @@ class Bisnieto extends Component {
   state = {
     massage: '********'
   }
-  componentDidMount () {
-    PubSub.subscribe('otro evento', (e, data) => {
-      this.setState({
-        massage: data.title
-      })
-    })
-  }
-
-  componentWillUnmount() {
-    PubSub.unsubscribe('otro evento')
-  }
 
   handleClick = () => {
-    PubSub.publish('saludo', 'Hola desde el Bisnieto')
+    this.setState({
+      massage: window.title
+    })
   }
 
   render() {
@@ -90,10 +81,12 @@ class Hijo extends Component {
 }
 
 class App extends Component {
+  componentDidMount () {
+    window.title = 'React es cool!!'
+  }
+
   handleClick = () => {
-    PubSub.publish('otro evento', {
-      title: 'Hola desde <App/>'
-    })
+    window.title = '##########'
   }
 
   render() {
