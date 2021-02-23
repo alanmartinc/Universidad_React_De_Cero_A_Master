@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-// Comunicación con metodos de instancia (Padre a Hijo)
+// Comunicación Event Bubbling (Hijo a Padre)
 const Header = () => {
   const subtitleStyles = {
     fontWeight: 'bold'
@@ -18,10 +18,10 @@ const Header = () => {
   return(
     <header style={headerStyles}>
         <div>
-          Comunicación entre componentes
+          (Hijo a Padre)
         </div>
         <div style={subtitleStyles}>
-          Metodos de Instancia
+          Event Bubbling
           <span role="image" aria="flame">
             🔥
           </span>
@@ -30,41 +30,40 @@ const Header = () => {
   )
 }
 
-class Hijo extends Component {
-  state = {
-    message: '****'
-  }
+const boxStyles = {
+  padding: '0.5em',
+  margin: '0.5em',
+  border: '1px solid gray',
+  borderRadius: '0.3em',
+  textAlign: 'center'
+}
 
-  dispatchAlert = (e, message='Alert desde el Hijo') => {
-    alert(message)
-    this.setState({message})
+class Hijo extends Component {
+  handleClick = (e) => {
+    // e.stopPropagation()
+    e.saludo = 'Hola mensaje desde el Hijo'
+    console.log('Click en Hijo')
   }
 
   render() {
     return(
-      <div>
-        <h2>{this.state.message}</h2>
-        <button onClick={this.dispatchAlert}>
-          Hijo
-        </button>
+      <div style={boxStyles} onClick={this.handleClick}>
+        <p>Hijo</p>
       </div>
     )
   }
 }
 
 class App extends Component {
-  hijo = React.createRef()
-
-  handleClick = () => {
-    this.hijo.current.dispatchAlert(null, 'Alert desde el Padre')
+  handleClick = (e) => {
+    console.log('Click en Padre', e.saludo)
   }
 
   render() {
     return(
-      <div>
-        <Header/>
-        <Hijo ref={this.hijo}/>
-        <button onClick={this.handleClick}>Padre</button>
+      <div style={boxStyles} onClick={this.handleClick}>
+          <Header/>
+          <Hijo/>
       </div>
     )
   }
