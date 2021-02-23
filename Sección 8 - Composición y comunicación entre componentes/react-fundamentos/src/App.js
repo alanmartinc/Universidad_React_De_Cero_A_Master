@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import PubSub from 'pubsub-js'
 
-// Variables Globales (Cualquiera)
+// Comunicación con API Context
+const {Provider, Consumer} = React.createContext()
+
 const Header = () => {
   const subtitleStyles = {
     fontWeight: 'bold'
@@ -22,7 +23,7 @@ const Header = () => {
           (Cualquiera)
         </div>
         <div style={subtitleStyles}>
-          Variables Globales
+          React API Context
           <span role="image" aria="flame">
             🔥
           </span>
@@ -39,41 +40,24 @@ const boxStyles = {
   textAlign: 'center'
 }
 
-class Bisnieto extends Component {
-  state = {
-    massage: '********'
-  }
-
-  handleClick = () => {
-    this.setState({
-      massage: window.title
-    })
-  }
-
-  render() {
-    return(
+const Nieto = () => (
+  <Consumer>
+    {({addClicks, clicks}) => (
       <div style={boxStyles}>
-        <p>{this.state.massage}</p>
-        <button onClick={this.handleClick}>Nieto</button>
+        <p>Nieto</p>
+        <button onClick={addClicks}>
+          Disparar({clicks})
+        </button>
       </div>
-    )
-  }
-}
-
-class Nieto extends Component {
-  render() {
-    return(
-      <div style={boxStyles}>
-        <Bisnieto/>
-      </div>
-    )
-  }
-}
+    )}
+  </Consumer>
+)
 
 class Hijo extends Component {
   render() {
     return(
       <div style={boxStyles}>
+        <p>Hijo</p>
         <Nieto/>
       </div>
     )
@@ -81,23 +65,27 @@ class Hijo extends Component {
 }
 
 class App extends Component {
-  componentDidMount () {
-    window.title = 'React es cool!!'
+  state = {
+    clicks: 0
   }
 
-  handleClick = () => {
-    window.title = '##########'
+  addClicks = () => {
+    this.setState(state => ({
+      clicks: state.clicks + 1
+    }))
   }
 
   render() {
     return(
-      <div style={boxStyles}>
-        <button onClick={this.handleClick}>
-          Padre
-        </button>
-        <Header/>
-        <Hijo/>
-      </div>
+      <Provider value={{
+        clicks: this.state.clicks,
+        addClicks: this.addClicks
+      }}>
+        <div style={boxStyles}>
+          <Header/>
+          <Hijo/>
+        </div>
+      </Provider>
     )
   }
 }
