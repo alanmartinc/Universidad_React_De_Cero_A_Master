@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
-import propTypes from 'prop-types'
 
-// Ejemplo HOC con opciones de configuración
-const {Provider, Consumer} = React.createContext()
-
+// Ejemplo HOC (withSizes)
 const Header = () => {
   const subtitleStyles = {
     fontWeight: 'bold'
@@ -41,44 +38,49 @@ const boxStyles = {
   textAlign: 'center'
 }
 
-// HOC
-const withCounter = (Comp) => {
-  return (config) => class extends Component {
-    state = {
-      num: config.clicks
-    }
+const withSizes = (Comp) => class extends Component {
+  state = {
+    width: window.innerWidth,
+    height: window.innerHeight
+  }
 
-    add = () => {
-      this.setState(state => ({
-        num: state.num + config.sumClicks
-      }))
-    }
+  componentDidMount() {
+    window.addEventListener('resize', this.handleResize)
+  }
 
-    render() {
-      return(
-        <Comp num={this.state.num} add={this.add}/>
-      )
-    }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize)
+  }
+
+  handleResize = () => {
+    this.setState({
+      width: window.innerWidth,
+      height: window.innerHeight
+    })
+  }
+
+  render() {
+    const {width, height} = this.state
+    
+    return(
+      <Comp width={width} height={height}/>
+    )
   }
 }
 
 class App extends Component {
   render() {
-    const {num, add} = this.props
+    const {width, height} = this.props
 
     return(
       <div style={boxStyles}>
         <Header/>
-        <h1>{num}</h1>
-        <button onClick={add}>
-          ADD
-        </button>
+        <h1>
+          {width} - {height}
+        </h1>
       </div>
     )
   }
 }
 
-export default withCounter(App) ({
-  clicks: 10,
-  sumClicks: 3
-})
+export default withSizes(App)
