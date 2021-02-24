@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 
-// Controlar la ejecución de useEffect
+// Ejemplo de solicitud HTTP con Hook useEffect
 const Header = () => {
     const subtitleStyles = {
         fontWeight: 'bold'
@@ -27,31 +27,29 @@ const Header = () => {
 }
 
 const App = () => {
-    const [num, setNum] = useState(0)
-    const [emoji, setEmoji] = useState('🦁')
+    const [users, setUsers] = useState([])
+    const [isFetching, setFetching] = useState(true)
 
     useEffect(() => {
-        alert('useEffect ✨')
+        fetch('https://jsonplaceholder.typicode.com/users')
+            .then(res => res.json())
+            .then(users => {
+                setUsers(users)
+                setFetching(false)
+            })
     }, [])
-
-    const addNum = () => setNum(num + 1)
-    const toggleEmoji = () => {
-        const nextEmoji = emoji === '🦁' ? '🐨' : '🦁'
-        setEmoji(nextEmoji)
-    }
 
     return(
         <div>
             <Header/>
-            <button onClick={addNum}>
-                ADD ({num})
-            </button>
-            <button onClick={toggleEmoji}>
-                Alternar Emoji
-            </button>
-            <h1>
-                {emoji}
-            </h1>
+            {isFetching && <h1>Cargando...</h1>}
+            <ul>
+                {users.map(user => (
+                    <li key={user.id}>
+                        {user.name}
+                    </li>
+                ))}
+            </ul>
         </div>
     )
 }
