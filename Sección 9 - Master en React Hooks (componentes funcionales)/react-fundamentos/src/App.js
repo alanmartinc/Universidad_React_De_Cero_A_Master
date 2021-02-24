@@ -1,6 +1,6 @@
-import React, {Component, useEffect, useState} from 'react'
+import React, {useState, useEffect} from 'react'
 
-// Introducción al Hook useEffect
+// Ejemplo de uso useEffect
 const Header = () => {
     const subtitleStyles = {
         fontWeight: 'bold'
@@ -27,29 +27,28 @@ const Header = () => {
 }
 
 const App = () => {
-    const [clicks, setClicks] = useState(0)
+    const [mouseX, setMouseX] = useState(0)
+    const [mouseY, setMouseY] = useState(0)
+
+    const handleMove = (e) => {
+        setMouseX(e.clientX)
+        setMouseY(e.clientY)
+    }
 
     useEffect(() => {
-        // componentDidMount
-        // componentDidUpdate
-        console.log('Dentro de useEffect', clicks)
-        // Cuando ponemos el signo de % y c, como segundo parametro le podemos pasar estilos CSS
-        console.log('%c---------------------------', 'color: green')
+        window.addEventListener('mousemove', handleMove)
 
-        return() => {
-            // componentWillUnmount
-            console.log('Return de useEffect', clicks)
+        return () => {
+            window.removeEventListener('mousemove', handleMove)
         }
     })
-
-    const add = () => setClicks(clicks + 1)
 
     return(
         <div>
             <Header/>
-            <button onClick={add}>
-                Clicks ({clicks})
-            </button>
+            <h1>
+                X: {mouseX} Y: {mouseY}
+            </h1>
         </div>
     )
 }
