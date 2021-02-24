@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 
-// Ejemplo de uso useEffect
+// Controlar la ejecución de useEffect
 const Header = () => {
     const subtitleStyles = {
         fontWeight: 'bold'
@@ -19,7 +19,7 @@ const Header = () => {
     return(
         <header style={headerStyles}>
             <h1>
-                Hook useState
+                Hook useEffect
                 <span role='img' aria-label='hook emoji'>⚓</span>
             </h1>
         </header> 
@@ -27,27 +27,30 @@ const Header = () => {
 }
 
 const App = () => {
-    const [mouseX, setMouseX] = useState(0)
-    const [mouseY, setMouseY] = useState(0)
-
-    const handleMove = (e) => {
-        setMouseX(e.clientX)
-        setMouseY(e.clientY)
-    }
+    const [num, setNum] = useState(0)
+    const [emoji, setEmoji] = useState('🦁')
 
     useEffect(() => {
-        window.addEventListener('mousemove', handleMove)
+        alert('useEffect ✨')
+    }, [])
 
-        return () => {
-            window.removeEventListener('mousemove', handleMove)
-        }
-    })
+    const addNum = () => setNum(num + 1)
+    const toggleEmoji = () => {
+        const nextEmoji = emoji === '🦁' ? '🐨' : '🦁'
+        setEmoji(nextEmoji)
+    }
 
     return(
         <div>
             <Header/>
+            <button onClick={addNum}>
+                ADD ({num})
+            </button>
+            <button onClick={toggleEmoji}>
+                Alternar Emoji
+            </button>
             <h1>
-                X: {mouseX} Y: {mouseY}
+                {emoji}
             </h1>
         </div>
     )
