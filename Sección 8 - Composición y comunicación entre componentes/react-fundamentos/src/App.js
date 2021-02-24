@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
 
-// Ejemplo de Patrón (Render Prop)
+// Ejemplo HOC con opciones de configuración
 const {Provider, Consumer} = React.createContext()
 
 const Header = () => {
@@ -21,10 +21,10 @@ const Header = () => {
   return(
     <header style={headerStyles}>
         <div>
-          (Hijo a Padre)
+          (Hijo ↔️ Padre)
         </div>
         <div style={subtitleStyles}>
-          Ejemplo Render Props
+        HOC High Order Component
           <span role="image" aria="flame">
             🔥
           </span>
@@ -41,55 +41,44 @@ const boxStyles = {
   textAlign: 'center'
 }
 
-class Resize extends Component {
-  static propTypes = {
-    render: propTypes.func.isRequired
-  }
+// HOC
+const withCounter = (Comp) => {
+  return (config) => class extends Component {
+    state = {
+      num: config.clicks
+    }
 
-  state = {
-    width: window.innerWidth,
-    height: window.innerHeight
-  }
+    add = () => {
+      this.setState(state => ({
+        num: state.num + config.sumClicks
+      }))
+    }
 
-  componentDidMount() {
-    window.addEventListener('resize', this.handleResize)
-  }
-
-  componentWillMount() {
-    window.removeEventListener('resize', this.handleResize)
-  }
-
-  handleResize = () => {
-    this.setState({
-      width: window.innerWidth,
-      height: window.innerHeight
-    })
-  }
-
-  render() {
-    const {width, height} = this.state
-    const {render} = this.props
-
-    return render({width, height})
+    render() {
+      return(
+        <Comp num={this.state.num} add={this.add}/>
+      )
+    }
   }
 }
 
 class App extends Component {
   render() {
+    const {num, add} = this.props
+
     return(
       <div style={boxStyles}>
         <Header/>
-        <Resize render={({width, height}) => {
-          return(
-            <div>
-              <h1>Width: {width}</h1>
-              <li>{height}</li>
-            </div>
-          )
-        }}/>
+        <h1>{num}</h1>
+        <button onClick={add}>
+          ADD
+        </button>
       </div>
     )
   }
 }
 
-export default App
+export default withCounter(App) ({
+  clicks: 10,
+  sumClicks: 3
+})
