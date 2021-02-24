@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 
-// Ejemplo de solicitud HTTP con Hook useEffect
+// Reglas de Hooks
 const Header = () => {
     const subtitleStyles = {
         fontWeight: 'bold'
@@ -19,7 +19,7 @@ const Header = () => {
     return(
         <header style={headerStyles}>
             <h1>
-                Hook useEffect
+                Reglas de Hooks
                 <span role='img' aria-label='hook emoji'>⚓</span>
             </h1>
         </header> 
@@ -27,29 +27,15 @@ const Header = () => {
 }
 
 const App = () => {
-    const [users, setUsers] = useState([])
-    const [isFetching, setFetching] = useState(true)
-
-    useEffect(() => {
-        fetch('https://jsonplaceholder.typicode.com/users')
-            .then(res => res.json())
-            .then(users => {
-                setUsers(users)
-                setFetching(false)
-            })
-    }, [])
+    const [clicks, setClicks] = useState(1)
+    const add = () => setClicks(clicks + 1)
 
     return(
         <div>
             <Header/>
-            {isFetching && <h1>Cargando...</h1>}
-            <ul>
-                {users.map(user => (
-                    <li key={user.id}>
-                        {user.name}
-                    </li>
-                ))}
-            </ul>
+            <button onClick={add}>
+                Clicks ({clicks})
+            </button>
         </div>
     )
 }
