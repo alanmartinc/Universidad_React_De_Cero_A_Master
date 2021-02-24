@@ -1,6 +1,6 @@
-import React, {Component, useState} from 'react'
+import React, {Component, useEffect, useState} from 'react'
 
-// Ejemplo de Hook useState con Objetos
+// Introducción al Hook useEffect
 const Header = () => {
     const subtitleStyles = {
         fontWeight: 'bold'
@@ -28,24 +28,28 @@ const Header = () => {
 
 const App = () => {
     const [clicks, setClicks] = useState(0)
-    const [title, setTitle] = useState('')
 
-    const addClicks = () => {
-        setClicks(clicks + 1)
-    }
+    useEffect(() => {
+        // componentDidMount
+        // componentDidUpdate
+        console.log('Dentro de useEffect', clicks)
+        // Cuando ponemos el signo de % y c, como segundo parametro le podemos pasar estilos CSS
+        console.log('%c---------------------------', 'color: green')
 
-    const handleInput = (e) => {
-        setTitle(e.target.value)
-    }
+        return() => {
+            // componentWillUnmount
+            console.log('Return de useEffect', clicks)
+        }
+    })
+
+    const add = () => setClicks(clicks + 1)
 
     return(
         <div>
             <Header/>
-            <input type="text" value={title} onChange={handleInput}/>
-            <button onClick={addClicks}>
+            <button onClick={add}>
                 Clicks ({clicks})
             </button>
-            <h3>{title}</h3>
         </div>
     )
 }
