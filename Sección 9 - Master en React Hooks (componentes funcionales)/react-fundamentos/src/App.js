@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useLayoutEffect} from 'react'
 
-// Reglas de Hooks
+// Entendiendo el Hook useLayoutEffect
 const Header = () => {
     const subtitleStyles = {
         fontWeight: 'bold'
@@ -19,7 +19,7 @@ const Header = () => {
     return(
         <header style={headerStyles}>
             <h1>
-                Reglas de Hooks
+                useLayoutEffect
                 <span role='img' aria-label='hook emoji'>⚓</span>
             </h1>
         </header> 
@@ -27,14 +27,30 @@ const Header = () => {
 }
 
 const App = () => {
-    const [clicks, setClicks] = useState(1)
-    const add = () => setClicks(clicks + 1)
+    const [count, setState] = useState(0)
+    const add = () => setState(count + 1)
+
+    useEffect(() => {
+        console.log('useEffect 1')
+    }, [count])
+
+    useEffect(() => {
+        console.log('useEffect 2')
+    }, [count])
+
+    useLayoutEffect(() => {
+        console.log('useLayoutEffect 1')
+    }, [count])
+
+    useLayoutEffect(() => {
+        console.log('useLayoutEffect 2')
+    }, [count])
 
     return(
         <div>
             <Header/>
             <button onClick={add}>
-                Clicks ({clicks})
+                Add ({count})
             </button>
         </div>
     )
