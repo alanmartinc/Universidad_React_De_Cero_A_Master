@@ -30,6 +30,7 @@ const App = () => {
     const [count, setState] = useState(0)
     const add = () => setState(count + 1)
 
+    // useEffect -> Asincrono, Se ejecuta despues de que se actualiza el DOM
     useEffect(() => {
         console.log('useEffect 1')
     }, [count])
@@ -38,6 +39,7 @@ const App = () => {
         console.log('useEffect 2')
     }, [count])
 
+    // useLayoutEffect -> Sincrono, Se ejecuta antes de que se actualiza el DOM
     useLayoutEffect(() => {
         console.log('useLayoutEffect 1')
     }, [count])
