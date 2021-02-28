@@ -1,6 +1,6 @@
-import React, {useState, useEffect, useLayoutEffect} from 'react'
+import React, {useState, useContext} from 'react'
 
-// Entendiendo el Hook useLayoutEffect
+// Entendiendo el Hook useContext
 const Header = () => {
     const subtitleStyles = {
         fontWeight: 'bold'
@@ -19,42 +19,66 @@ const Header = () => {
     return(
         <header style={headerStyles}>
             <h1>
-                useLayoutEffect
+                Hook useContext
                 <span role='img' aria-label='hook emoji'>⚓</span>
             </h1>
         </header> 
     )
 }
 
-const App = () => {
-    const [count, setState] = useState(0)
-    const add = () => setState(count + 1)
+const MyContext = React.createContext()
 
-    // useEffect -> Asincrono, Se ejecuta despues de que se actualiza el DOM
-    useEffect(() => {
-        console.log('useEffect 1')
-    }, [count])
+// Consumir context de forma tradicional
+// const Nieto = () => (
+//     <MyContext.Consumer>
+//         {(context) => (
+//             <div>
+//                 <p>Nieto {context.num}</p>
+//                 <button onClick={context.addNum}>
+//                     Nieto Dispatcher
+//                 </button>
+//             </div>
+//         )}
+//     </MyContext.Consumer>
+// )
 
-    useEffect(() => {
-        console.log('useEffect 2')
-    }, [count])
-
-    // useLayoutEffect -> Sincrono, Se ejecuta antes de que se actualiza el DOM
-    useLayoutEffect(() => {
-        console.log('useLayoutEffect 1')
-    }, [count])
-
-    useLayoutEffect(() => {
-        console.log('useLayoutEffect 2')
-    }, [count])
+const Nieto = () => {
+    const {num, addNum} = useContext(MyContext)
 
     return(
         <div>
-            <Header/>
-            <button onClick={add}>
-                Add ({count})
+            <p>Nieto {num}</p>
+            <button onClick={addNum}>
+                Nieto Dispatcher
             </button>
         </div>
+    )
+}
+
+const Hijo = () => (
+    <div>
+        <p>Hijo</p>
+        <Nieto/>
+    </div>
+)
+
+const App = () => {
+    const [num, setNum] = useState(0)
+    const addNum = () => setNum(num + 1)
+
+    return(
+        <MyContext.Provider value={{
+            num,
+            addNum
+        }}>
+            <div>
+                <Header/>
+                <button onClick={addNum}>
+                    Add ({num})
+                </button>
+                <Hijo/>
+            </div>
+        </MyContext.Provider>
     )
 }
 
