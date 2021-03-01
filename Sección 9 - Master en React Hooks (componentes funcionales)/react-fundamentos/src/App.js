@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react'
+import {useDebounce} from 'use-debounce'
 
-// Ejemplo practico de useState, useEffect y useRef
+// Ejemplo aplicando Hooks de terceros de NPM
 const Header = () => {
     const subtitleStyles = {
         fontWeight: 'bold'
@@ -28,20 +29,15 @@ const Header = () => {
 
 const App = () => {
     const [name, setName] = useState('')
+    const [search] = useDebounce(name, 1000)
     const [products, setProducts] = useState([])
-    const entrada = useRef()
 
     useEffect(() => {
-        // Debounce
-        setTimeout(() => {
-            if(name === entrada.current.value) {
-                // Solicitud HTTP
-                fetch('https://universidad-react-api-test.luxfenix.now.sh/products?name=' + name)
-                    .then(res => res.json())
-                    .then(data => setProducts(data.products))
-            }
-        }, 600)
-    }, [name])
+        // Solicitud HTTP
+        fetch('https://universidad-react-api-test.luxfenix.now.sh/products?name=' + name)
+            .then(res => res.json())
+            .then(data => setProducts(data.products))
+    }, [search])
 
     const handleInput = (e) => {
         setName(e.target.value)
@@ -50,7 +46,7 @@ const App = () => {
     return(
         <div>
             <Header/>
-            <input type='text' onChange={handleInput} ref={entrada}/>
+            <input type='text' onChange={handleInput} />
             <h1>{name}</h1>
             <ul>
                 {products.map(product => (
