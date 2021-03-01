@@ -1,7 +1,33 @@
-import React, {useState, useEffect, useRef} from 'react'
-import {useDebounce} from 'use-debounce'
+import React, {useState, useReducer} from 'react'
 
-// Ejemplo aplicando Hooks de terceros de NPM
+// Entendiendo Hook useReducer
+
+// Dispatch({type: 'INCREMENT', title: 'algo'})
+const reducer = (state, action) => {
+    switch(action.type) {
+        case 'INCREMENT':
+            return {
+                ...state,
+                count: state.count + 1
+            }
+        
+        case 'DECREMENT':
+            return {
+                ...state,
+                count: state.count - 1
+            }
+
+        case 'SET_TITLE':
+            return {
+                ...state,
+                title: action.title
+            }
+    
+        default:
+            return state
+    }
+}
+
 const Header = () => {
     const subtitleStyles = {
         fontWeight: 'bold'
@@ -20,7 +46,7 @@ const Header = () => {
     return(
         <header style={headerStyles}>
             <h1>
-                Hook useRef
+                Hook useReducer
                 <span role='img' aria-label='hook emoji'>⚓</span>
             </h1>
         </header> 
@@ -28,33 +54,32 @@ const Header = () => {
 }
 
 const App = () => {
-    const [name, setName] = useState('')
-    const [search] = useDebounce(name, 1000)
-    const [products, setProducts] = useState([])
+    const [state, dispatch] = useReducer(reducer, {
+        count: 0,
+        title: 'Hola'
+    })
 
-    useEffect(() => {
-        // Solicitud HTTP
-        fetch('https://universidad-react-api-test.luxfenix.now.sh/products?name=' + name)
-            .then(res => res.json())
-            .then(data => setProducts(data.products))
-    }, [search])
+    const increment = () => {
+        dispatch({type: 'INCREMENT'})
+    }
 
-    const handleInput = (e) => {
-        setName(e.target.value)
+    const decrement = () => {
+        dispatch({type: 'DECREMENT'})
+    }
+
+    const handleTitle = (e) => {
+        dispatch({type: 'SET_TITLE', title: e.target.value})
     }
 
     return(
         <div>
             <Header/>
-            <input type='text' onChange={handleInput} />
-            <h1>{name}</h1>
-            <ul>
-                {products.map(product => (
-                    <li key={product.id}>
-                        {product.name}
-                    </li>
-                ))}
-            </ul>
+            <input type='text' onChange={handleTitle} value={state.title}/>
+            <button onClick={increment}>Increment</button>
+            <button onClick={decrement}>Decrement</button>
+            <h1>
+                {state.count} - {state.title}
+            </h1>
         </div>
     )
 }
