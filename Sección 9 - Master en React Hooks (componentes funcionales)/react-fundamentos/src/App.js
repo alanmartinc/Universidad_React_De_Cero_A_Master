@@ -1,33 +1,6 @@
-import React, {useState, useReducer} from 'react'
+import React, {forwardRef, useImperativeHandle, useRef, useState} from 'react'
 
-// Entendiendo Hook useReducer
-
-// Dispatch({type: 'INCREMENT', title: 'algo'})
-const reducer = (state, action) => {
-    switch(action.type) {
-        case 'INCREMENT':
-            return {
-                ...state,
-                count: state.count + 1
-            }
-        
-        case 'DECREMENT':
-            return {
-                ...state,
-                count: state.count - 1
-            }
-
-        case 'SET_TITLE':
-            return {
-                ...state,
-                title: action.title
-            }
-    
-        default:
-            return state
-    }
-}
-
+// Entendiendo el Hook useImperativeHandle
 const Header = () => {
     const subtitleStyles = {
         fontWeight: 'bold'
@@ -46,40 +19,56 @@ const Header = () => {
     return(
         <header style={headerStyles}>
             <h1>
-                Hook useReducer
+                Hook useInperativeHandle
                 <span role='img' aria-label='hook emoji'>⚓</span>
             </h1>
         </header> 
     )
 }
 
+// React.forwardRef()
+// Ejecutar metodos de instancia
+
+const FancyInput = forwardRef((props, ref) => {
+    const [text, setText] = useState('***')
+    const entrada = useRef()
+
+    useImperativeHandle(ref, () => ({
+        dispatchAlert: () => {
+            alert('Hola')
+        },
+
+        setParragraph: (message) => {
+            setText(message)
+        },
+
+        focusInput: () => {
+            entrada.current.focus()
+        }
+    }))
+
+    return(
+        <div>
+            <p>{text}</p>
+            <input type='text' ref={entrada}/>
+        </div>
+    )
+})
+
 const App = () => {
-    const [state, dispatch] = useReducer(reducer, {
-        count: 0,
-        title: 'Hola'
-    })
+    const fancyInput = useRef()
 
-    const increment = () => {
-        dispatch({type: 'INCREMENT'})
-    }
-
-    const decrement = () => {
-        dispatch({type: 'DECREMENT'})
-    }
-
-    const handleTitle = (e) => {
-        dispatch({type: 'SET_TITLE', title: e.target.value})
+    const handleClick = () => {
+        fancyInput.current.focusInput()
     }
 
     return(
         <div>
             <Header/>
-            <input type='text' onChange={handleTitle} value={state.title}/>
-            <button onClick={increment}>Increment</button>
-            <button onClick={decrement}>Decrement</button>
-            <h1>
-                {state.count} - {state.title}
-            </h1>
+            <FancyInput ref={fancyInput}/>
+            <button onClick={handleClick}>
+                Dispatch
+            </button>
         </div>
     )
 }
