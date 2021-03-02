@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useDebugValue} from 'react'
 
-// Introduccion a Hooks personalizados
+// Hook useDebugValue
 const Header = () => {
     const styles = {
         background: 'linear-gradient(20deg, #6813cb, #2575fc)',
@@ -27,6 +27,8 @@ const Header = () => {
 const useSizes = () => {
     const [width, setWith] = useState(window.innerWidth)
     const [height, setHeight] = useState(window.innerHeight)
+
+    useDebugValue('Primer Hook')
 
     // Agregar listener
     const handleResize = () => {
