@@ -1,67 +1,64 @@
-import React, {useState, useMemo, memo} from 'react'
+import React, {useState, useEffect} from 'react'
 
-// Hook useMemo para mejorar el rendimiento
+// Introduccion a Hooks personalizados
 const Header = () => {
-    const subtitleStyles = {
-        fontWeight: 'bold'
-    }
-
-    const headerStyles = {
-        margin: '0.3em',
-        padding: '.3em',
-        color: '#FFF',
-        borderRadius: '0.2em',
-        textAlign: 'center',
+    const styles = {
         background: 'linear-gradient(20deg, #6813cb, #2575fc)',
+        textAlign: 'center',
+        borderRadius: '0.2em',
+        color: '#FFF',
+        padding: '0.3em',
+        margin: '0.3em',
         fontSize: '14px'
     }
 
-    return(
-        <header style={headerStyles}>
-            <h1>
-                Hook useMemo
-                <span role='img' aria-label='hook emoji'>⚓</span>
-            </h1>
-        </header> 
+    return (
+    <header style={styles}>
+        <h1>
+        Hooks Personalizados
+            <span role='img' aria-label='hook emoji'>
+                ⚓
+            </span> 
+        </h1>
+    </header>
     )
 }
 
-const SuperList = ({list, log}) => {
-    console.log('%cRender <SuperList/>' + log, 'color: green')
+const useSizes = () => {
+    const [width, setWith] = useState(window.innerWidth)
+    const [height, setHeight] = useState(window.innerHeight)
 
-    return(
-        <ul>
-            {list.map(item => (
-                <li key={item}>
-                    {item}
-                </li>
-            ))}
-        </ul>
-    )
+    // Agregar listener
+    const handleResize = () => {
+    setWith(window.innerWidth)
+    setHeight(window.innerHeight)
+    }
+
+    useEffect(() => {
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+    window.removeEventListener('resize', handleResize)
+    }
+    }, [])
+
+
+    return {
+    width,
+    height
+    }
 }
 
 const App = () => {
-    const [clicks, setClicks] = useState(0)
+    const { height, width } = useSizes()
 
-    const add = () => {
-        setClicks(clicks + 1)
-    }
-
-    const memoList = useMemo(() => {
-        return(
-            <SuperList list={[1, 2, 11, 55, 88]} log={'Memorizado'}/>
-        )
-    }, [])
-
-    return(
-        <div>
-            <Header/>
-            <button onClick={add}>
-                Clicks({clicks})
-            </button>
-            <SuperList list={['orange', 'pink', 'purple', 'yellow']} log='Normal'/>
-            {memoList}
-        </div>
+    return (
+    <div>
+        <Header />
+        <h1>
+            Width: {width}px  Height: {height}px
+        </h1>
+    </div>
     )
 }
 
