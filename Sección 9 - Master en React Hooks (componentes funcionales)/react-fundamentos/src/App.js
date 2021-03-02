@@ -1,6 +1,6 @@
-import React, {useState, useEffect, useDebugValue} from 'react'
+import React, {useState, useEffect} from 'react'
 
-// Hook useDebugValue
+// Hook personalizado para hacer solicitudes HTTP
 const Header = () => {
     const styles = {
         background: 'linear-gradient(20deg, #6813cb, #2575fc)',
@@ -24,42 +24,39 @@ const Header = () => {
     )
 }
 
-const useSizes = () => {
-    const [width, setWith] = useState(window.innerWidth)
-    const [height, setHeight] = useState(window.innerHeight)
-
-    useDebugValue('Primer Hook')
-
-    // Agregar listener
-    const handleResize = () => {
-    setWith(window.innerWidth)
-    setHeight(window.innerHeight)
-    }
+const useFetch = (url) => {
+    const [data, setData] =  useState([])
+    const [isFetching, setFetching] = useState(true)
 
     useEffect(() => {
-    window.addEventListener('resize', handleResize)
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                setData(data)
+                setFetching(false)
+            })
+    }, [ url ])
 
-    return () => {
-    window.removeEventListener('resize', handleResize)
-    }
-    }, [])
-
-
-    return {
-    width,
-    height
-    }
+    return [
+    data,
+    isFetching
+    ]
 }
 
 const App = () => {
-    const { height, width } = useSizes()
+    const [users, isLoading] = useFetch('https://jsonplaceholder.typicode.com/users')
 
     return (
     <div>
         <Header />
-        <h1>
-            Width: {width}px  Height: {height}px
-        </h1>
+        {isLoading && <h1>Cargando...</h1>}
+        <ul>
+            {users.map(user => (
+                <li key={user.id}>
+                    { user.name }
+                </li>
+            ))}
+        </ul>
     </div>
     )
 }
