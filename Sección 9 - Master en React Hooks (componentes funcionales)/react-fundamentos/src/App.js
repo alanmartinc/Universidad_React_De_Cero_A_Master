@@ -1,6 +1,6 @@
-import React, {forwardRef, useImperativeHandle, useRef, useState} from 'react'
+import React, {useState, useCallback} from 'react'
 
-// Usar React.memo con diferenciación manual
+// Hook useCallback para mejorar el rendimiento
 const Header = () => {
     const subtitleStyles = {
         fontWeight: 'bold'
@@ -19,70 +19,45 @@ const Header = () => {
     return(
         <header style={headerStyles}>
             <h1>
-                React.memo
+                Hook useCallback
                 <span role='img' aria-label='hook emoji'>⚓</span>
             </h1>
         </header> 
     )
 }
 
-// React.memo() HOC
-const Counter = React.memo(({count}) => {
-    console.log('%cRender <Counter/>', 'color: blue')
+const getRandomColor = () => '#' + Math.random().toString(16).slice(2, 8)
+
+const Button = React.memo(({callback, children}) => {
+    const styles = {
+        padding: '1em',
+        fontSize: '20px',
+        background: getRandomColor()
+    }
 
     return(
-        <h1>
-            {count}
-        </h1>
+        <button style={styles} onClick={callback}>
+            {children}
+        </button>
     )
-})
-
-const Title = React.memo(({text}) => {
-    console.log('%cRender <Title/>', 'color: orangered')
-
-    return(
-        <h1>
-            {text}
-        </h1>
-    )
-})
-
-const TitleNested = React.memo(({info}) => {
-    console.log('%cRender <TitleNested/>', 'color: purple')
-
-    return(
-        <h1>
-            {info.text}
-        </h1>
-    )
-}, (prevProps, nextProps) => {
-    // Si retorna true no se renderiza
-    // Si retorna false si se renderiza
-    return prevProps.info.text === nextProps.info.text
 })
 
 const App = () => {
-    const [title, setTitle] = useState('')
-    const [count, setCount] = useState(0)
+    const [a, setA] = useState(0)
 
-    const handleInput = (e) => {
-        setTitle(e.target.value)
-    }
-
-    const handleAdd = () => {
-        setCount(count + 1)
-    }
+    const incrementA = useCallback(() => {
+        setA(a => a + 1)
+    }, [])
 
     return(
         <div>
             <Header/>
-            <input type='text' onChange={handleInput}/>
-            <button onClick={handleAdd}>
-                Add
-            </button>
-            <Counter count={count}/>
-            <Title text={title}/>
-            <TitleNested info={{text: title}}/>
+            <Button callback={incrementA}>
+                Increment A
+            </Button>
+            <h1>
+                a: {a}
+            </h1>
         </div>
     )
 }
