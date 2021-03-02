@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 
-// Hook personalizado para hacer solicitudes HTTP
+// Hook personalizado para hacer solicitudes HTTP 2
 const Header = () => {
     const styles = {
         background: 'linear-gradient(20deg, #6813cb, #2575fc)',
@@ -24,18 +24,19 @@ const Header = () => {
     )
 }
 
-const useFetch = (url) => {
-    const [data, setData] =  useState([])
+const useFetch = (url, initialState = []) => {
+    const [data, setData] = useState(initialState)
     const [isFetching, setFetching] = useState(true)
 
     useEffect(() => {
+    setFetching(true)
         fetch(url)
             .then(res => res.json())
             .then(data => {
                 setData(data)
                 setFetching(false)
             })
-    }, [ url ])
+    }, [url])
 
     return [
     data,
@@ -44,19 +45,27 @@ const useFetch = (url) => {
 }
 
 const App = () => {
-    const [users, isLoading] = useFetch('https://jsonplaceholder.typicode.com/users')
+    const [clicks, setClicks] = useState(1)
+    const [user, isLoading] = useFetch('https://jsonplaceholder.typicode.com/users/' + clicks, {})
+
+    const add = () => setClicks(clicks + 1)
 
     return (
     <div>
-        <Header />
+        <Header/>
         {isLoading && <h1>Cargando...</h1>}
-        <ul>
+        <h1>{user.name}</h1>
+        <p>{user.phone}</p>
+        <button onClick={add}>
+            Clicks ({clicks})
+        </button>
+        {/* <ul>
             {users.map(user => (
                 <li key={user.id}>
-                    { user.name }
+                    {user.name}
                 </li>
             ))}
-        </ul>
+        </ul> */}
     </div>
     )
 }
