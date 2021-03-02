@@ -1,6 +1,6 @@
 import React, {forwardRef, useImperativeHandle, useRef, useState} from 'react'
 
-// Entendiendo el Hook useImperativeHandle
+// Entendiendo React.memo para rendimiento
 const Header = () => {
     const subtitleStyles = {
         fontWeight: 'bold'
@@ -19,56 +19,55 @@ const Header = () => {
     return(
         <header style={headerStyles}>
             <h1>
-                Hook useInperativeHandle
+                React.memo
                 <span role='img' aria-label='hook emoji'>⚓</span>
             </h1>
         </header> 
     )
 }
 
-// React.forwardRef()
-// Ejecutar metodos de instancia
-
-const FancyInput = forwardRef((props, ref) => {
-    const [text, setText] = useState('***')
-    const entrada = useRef()
-
-    useImperativeHandle(ref, () => ({
-        dispatchAlert: () => {
-            alert('Hola')
-        },
-
-        setParragraph: (message) => {
-            setText(message)
-        },
-
-        focusInput: () => {
-            entrada.current.focus()
-        }
-    }))
+// React.memo() HOC
+const Counter = React.memo(({count}) => {
+    console.log('%cRender <Counter/>', 'color: blue')
 
     return(
-        <div>
-            <p>{text}</p>
-            <input type='text' ref={entrada}/>
-        </div>
+        <h1>
+            {count}
+        </h1>
+    )
+})
+
+const Title = React.memo(({text}) => {
+    console.log('%cRender <Title/>', 'color: orangered')
+
+    return(
+        <h1>
+            {text}
+        </h1>
     )
 })
 
 const App = () => {
-    const fancyInput = useRef()
+    const [title, setTitle] = useState('')
+    const [count, setCount] = useState(0)
 
-    const handleClick = () => {
-        fancyInput.current.focusInput()
+    const handleInput = (e) => {
+        setTitle(e.target.value)
+    }
+
+    const handleAdd = () => {
+        setCount(count + 1)
     }
 
     return(
         <div>
             <Header/>
-            <FancyInput ref={fancyInput}/>
-            <button onClick={handleClick}>
-                Dispatch
+            <input type='text' onChange={handleInput}/>
+            <button onClick={handleAdd}>
+                Add
             </button>
+            <Counter count={count}/>
+            <Title text={title}/>
         </div>
     )
 }
