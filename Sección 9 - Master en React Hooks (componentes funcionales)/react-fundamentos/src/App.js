@@ -1,6 +1,6 @@
 import React, {forwardRef, useImperativeHandle, useRef, useState} from 'react'
 
-// Entendiendo React.memo para rendimiento
+// Usar React.memo con diferenciación manual
 const Header = () => {
     const subtitleStyles = {
         fontWeight: 'bold'
@@ -47,6 +47,20 @@ const Title = React.memo(({text}) => {
     )
 })
 
+const TitleNested = React.memo(({info}) => {
+    console.log('%cRender <TitleNested/>', 'color: purple')
+
+    return(
+        <h1>
+            {info.text}
+        </h1>
+    )
+}, (prevProps, nextProps) => {
+    // Si retorna true no se renderiza
+    // Si retorna false si se renderiza
+    return prevProps.info.text === nextProps.info.text
+})
+
 const App = () => {
     const [title, setTitle] = useState('')
     const [count, setCount] = useState(0)
@@ -68,6 +82,7 @@ const App = () => {
             </button>
             <Counter count={count}/>
             <Title text={title}/>
+            <TitleNested info={{text: title}}/>
         </div>
     )
 }
