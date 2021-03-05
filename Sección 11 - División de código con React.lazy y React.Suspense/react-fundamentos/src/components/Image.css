@@ -1,0 +1,17 @@
+@keyframes show {
+  0% {
+    transform: scale(0.2);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.show {
+  animation: 1s show ease-out forwards;
+  width: 400px;
+  margin: 1em auto;
+}
