@@ -1,33 +1,26 @@
-import React, {useState} from 'react'
-import './components/Animaciones.css'
+import React from 'react'
+import Acordion from './components/Acordion'
 
-// Transiciones y Animaciones con clases CSS
-const Header = ({show}) => {
-    const clases = show ? 'header header-active' : 'header' 
-
-    return(
-        <header className={clases}>
-            <h1>
-                Transiciones CSS en linea
-                <span role='img' aria-label='fire'>
-                    🔥
-                </span>
-            </h1>
-        </header>
-    )
-}
-
+// Workshop de Componente Acordion
 const App = () => {
-    const[active, setActive] = useState(false)
-
-    const toggle = () => setActive(!active)
-
     return(
         <div>
-            <button onClick={toggle}>
-                {active ? 'Desactivar' : 'Activar'}
-            </button>
-            <Header show={active}/>
+            <Acordion
+                title='Ejemplo de Acordeon'
+                content='lorem ipsum'
+                bgColor='black'
+            />
+
+            <Acordion
+                title='Porque Universidad React'
+                content='El curso mas completo y actualizado de React'
+            />
+
+            <Acordion
+                title='Siguiente Nivel'
+                content='lorem ipsum'
+                bgColor='orangered'
+            />
         </div>
     )
 }
