@@ -1,34 +1,38 @@
-import React from 'react'
-import Slides from './components/Slides'
+import React, {useState} from 'react'
+import {TransitionGroup, CSSTransition} from 'react-transition-group'
+import './App.css'
 
-const images = [
-    {
-        src: 'https://images.pexels.com/photos/2098427/pexels-photo-2098427.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-        title: 'El universo el origen'
-    },
-    {
-        src: 'https://images.pexels.com/photos/2521470/pexels-photo-2521470.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260',
-        title: 'El diseño tambien es arte!'
-    },
-    {
-        src: 'https://images.pexels.com/photos/3018365/pexels-photo-3018365.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260',
-        title: 'La fotogradia el mejor camino!'
-    },
-    {
-        src: 'https://images.pexels.com/photos/2108709/pexels-photo-2108709.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-        title: 'La naturaleza siempre la guia'
-    }
-]
-
+// Introducción a React-transition-group
 const App = () => {
-    return (
-        <div>
-        <Slides
-            interval={2000}
-            images={images}
-        />
+  const [ clicks, setClicks ] = useState(0)
+
+  const increment = () => setClicks(clicks + 1)
+  const decrement = () => setClicks(clicks - 1)
+
+  return (
+    <div>
+      <button onClick={increment}>
+        +
+      </button>
+      <button onClick={decrement}>
+        -
+      </button>
+
+      <div className='box'>
+        <TransitionGroup>
+          <CSSTransition
+            timeout={1000}
+            classNames='fade'
+            key={clicks}
+          >
+          <div>
+            { clicks }
+          </div>
+          </CSSTransition>
+        </TransitionGroup>
+      </div>
     </div>
-    )
+  )
 }
 
 export default App
