@@ -1,36 +1,17 @@
-import React, {useState} from 'react'
-import {TransitionGroup, CSSTransition} from 'react-transition-group'
-import './App.css'
+import React from 'react'
+import Carrousel from './components/Carrousel'
 
-// Introducción a React-transition-group
+// Workshop Utilizando React Transition Group
 const App = () => {
-  const [ clicks, setClicks ] = useState(0)
-
-  const increment = () => setClicks(clicks + 1)
-  const decrement = () => setClicks(clicks - 1)
-
   return (
     <div>
-      <button onClick={increment}>
-        +
-      </button>
-      <button onClick={decrement}>
-        -
-      </button>
-
-      <div className='box'>
-        <TransitionGroup>
-          <CSSTransition
-            timeout={1000}
-            classNames='fade'
-            key={clicks}
-          >
-          <div>
-            { clicks }
-          </div>
-          </CSSTransition>
-        </TransitionGroup>
-      </div>
+      <Carrousel
+        images={[
+          'https://images.pexels.com/photos/2059661/pexels-photo-2059661.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+          'https://images.pexels.com/photos/2108373/pexels-photo-2108373.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+          'https://images.pexels.com/photos/2250619/pexels-photo-2250619.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260'
+        ]}
+      />
     </div>
   )
 }
