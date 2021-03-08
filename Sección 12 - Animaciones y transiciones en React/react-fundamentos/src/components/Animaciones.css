@@ -1,0 +1,29 @@
+@keyframes showUp {
+    0% {
+        background: black;
+        transform: scale(0.1) rotate(250deg);
+    }
+
+    100% {
+        background: purple;
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+.header {
+    background: black;
+    transform: scale(0);
+    position: absolute;
+    text-align: center;
+    border-radius: .4em;
+    color: #FFF;
+    padding: 0.5em;
+    margin: 0.5em;
+    font-size: 14px;
+    transition: all 800ms ease;
+}
+
+.header-active {
+    animation: 1500ms showUp ease-in-out;
+    animation-fill-mode: forwards;
+}

@@ -1,34 +1,12 @@
 import React, {useState} from 'react'
+import './components/Animaciones.css'
 
-// Transiciones con estilos en linea CSS
+// Transiciones y Animaciones con clases CSS
 const Header = ({show}) => {
-    const activeStyles = {
-        background: '#3d1f9a',
-        transform: 'scale(1)'
-    }
-
-    let headerStyles = {
-        background: 'black',
-        transform: 'scale(0)',
-        position: 'absolute',
-        textAlign: 'center',
-        borderRadius: '.4em',
-        color: '#FFF',
-        padding: '0.5em',
-        margin: '0.5em',
-        fontSize: '14px',
-        transition: 'all 800ms ease'
-    }
-
-    if(show) {
-        headerStyles = {
-            ...headerStyles,
-            ...activeStyles
-        }
-    }
+    const clases = show ? 'header header-active' : 'header' 
 
     return(
-        <header style={headerStyles}>
+        <header className={clases}>
             <h1>
                 Transiciones CSS en linea
                 <span role='img' aria-label='fire'>
