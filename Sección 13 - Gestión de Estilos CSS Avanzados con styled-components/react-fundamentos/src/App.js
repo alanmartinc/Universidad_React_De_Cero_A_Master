@@ -1,14 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
-import {colorPrincipal} from './colors'
 
-// Constantes básicas
+// Constantes básica
+const colorPrincipal = '#789DFF'
+const paddingBasic = 'padding: 0.1em'
+
+// Constantes completas
 const Header = styled.header `
   background: ${colorPrincipal};
   text-align: center;
   border-radius: 0.2em;
   color: #FFF;
-  padding: 0.3em;
+  ${paddingBasic};
   margin: 0.3em;
   font-size: 14px;
 `
