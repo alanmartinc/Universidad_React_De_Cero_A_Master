@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-// Estilizando elementos anidados en styled-components
+// Estilizando con clases CSS en elementos anidados
 const Header = styled.header `
   background: linear-gradient(20deg, #db7093, #daa354);
   text-align: center;
@@ -15,10 +15,9 @@ const Header = styled.header `
     color: white;
   }
 
-  div {
-    width: 50px;
-    height: 50px;
-    background: black;
+  .big {
+    font-size: 20px;
+    color: black;
   }
 `
 
@@ -29,8 +28,8 @@ const App = () => {
         <h1>
           Styled Components
         </h1>
-        <div>
-          *
+        <div className='big'>
+          Ejemplo
         </div>
       </Header>
     </div>
