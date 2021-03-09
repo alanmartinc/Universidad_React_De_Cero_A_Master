@@ -3,11 +3,17 @@ import styled from 'styled-components'
 
 // Constantes básica
 const colorPrincipal = '#789DFF'
-const paddingBasic = 'padding: 0.1em'
 
 // Constantes completas
+const paddingBasic = 'padding: 0.1em'
+
+// Variables Dinámicas con funciones
+const getLinearGradient = (rot, color1, color2) => {
+  return `background: linear-gradient(${rot}, ${color1}, ${color2});`
+}
+
 const Header = styled.header `
-  background: ${colorPrincipal};
+  ${getLinearGradient('50deg', 'blue', 'red')}
   text-align: center;
   border-radius: 0.2em;
   color: #FFF;
