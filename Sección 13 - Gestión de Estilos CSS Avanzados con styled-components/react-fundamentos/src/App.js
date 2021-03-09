@@ -1,39 +1,38 @@
 import React from 'react'
 import styled from 'styled-components'
 
-// Constantes básica
-const colorPrincipal = '#789DFF'
-
-// Constantes completas
-const paddingBasic = 'padding: 0.1em'
-
-// Variables Dinámicas con funciones
-const getLinearGradient = (rot, color1, color2) => {
-  return `background: linear-gradient(${rot}, ${color1}, ${color2});`
-}
-
+// Estilizando elementos anidados en styled-components
 const Header = styled.header `
-  ${getLinearGradient('50deg', 'blue', 'red')}
+  background: linear-gradient(20deg, #db7093, #daa354);
   text-align: center;
   border-radius: 0.2em;
   color: #FFF;
-  ${paddingBasic};
+  padding: 0.3em;
   margin: 0.3em;
   font-size: 14px;
-`
-const Subtitle = styled.h2 `
-  color: ${colorPrincipal};
+
+  h1 {
+    color: white;
+  }
+
+  div {
+    width: 50px;
+    height: 50px;
+    background: black;
+  }
 `
 
 const App = () => {
   return (
     <div>
       <Header>
-        <h1>Styled Components</h1>
+        <h1>
+          Styled Components
+        </h1>
+        <div>
+          *
+        </div>
       </Header>
-      <Subtitle>
-        Ejemplo de Titulo
-      </Subtitle>
     </div>
   )
 }
