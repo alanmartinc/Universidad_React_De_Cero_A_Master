@@ -1,7 +1,7 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
 
-// Componentes dinámicos con props
+// Props con un operador ternario
 const Header = styled.header `
   background: #db7093;
   text-align: center;
@@ -14,7 +14,7 @@ const Header = styled.header `
 
 const Button = styled.button `
   padding: 0.6em 1.5em;
-  background: ${(props) => props.bg || 'gray'};
+  background: ${(props) => props.active ? 'purple' : 'gray'};
   border-radius: 0.1em;
   color: #FFF;
   border: 0;
@@ -22,6 +22,10 @@ const Button = styled.button `
 `
 
 const App = () => {
+  const [active, setActive] = useState(false)
+
+  const toggle = () => setActive(!active)
+
   return (
     <div>
       <Header>
@@ -32,7 +36,7 @@ const App = () => {
       <Button>
         Un Boton
       </Button>
-      <Button bg='orangered'>
+      <Button onClick={toggle} active={active}>
         Toggle
       </Button>
     </div>
