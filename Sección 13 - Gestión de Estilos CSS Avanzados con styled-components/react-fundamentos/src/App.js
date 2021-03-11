@@ -1,29 +1,24 @@
 import React from 'react'
 import styled from 'styled-components'
 
-// Pseudo Clases CSS
+// Componentes dinámicos con props
 const Header = styled.header `
-  background: linear-gradient(20deg, #db7093, #daa354);
+  background: #db7093;
   text-align: center;
   border-radius: 0.2em;
   color: #FFF;
   padding: 0.3em;
   margin: 0.3em;
   font-size: 14px;
-  transition: opacity 350ms ease-out;
-  opacity: 0.5;
+`
 
-  &:hover {
-    opacity: 1;
-
-    h1 {
-      color: red;
-    }
-  }
-
-  h1 {
-    color: purple;
-  }
+const Button = styled.button `
+  padding: 0.6em 1.5em;
+  background: ${(props) => props.bg || 'gray'};
+  border-radius: 0.1em;
+  color: #FFF;
+  border: 0;
+  margin: 0.4em;
 `
 
 const App = () => {
@@ -34,6 +29,12 @@ const App = () => {
           Styled Components
         </h1>
       </Header>
+      <Button>
+        Un Boton
+      </Button>
+      <Button bg='orangered'>
+        Toggle
+      </Button>
     </div>
   )
 }
