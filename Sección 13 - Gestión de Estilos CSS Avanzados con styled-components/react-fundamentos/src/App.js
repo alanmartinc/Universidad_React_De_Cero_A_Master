@@ -1,7 +1,7 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
 
-// Props con un operador ternario
+// Extendiendo estilos con styled-components
 const Header = styled.header `
   background: #db7093;
   text-align: center;
@@ -14,18 +14,50 @@ const Header = styled.header `
 
 const Button = styled.button `
   padding: 0.6em 1.5em;
-  background: ${(props) => props.active ? 'purple' : 'gray'};
+  background: ${(props) => props.bg || 'gray'};
   border-radius: 0.1em;
   color: #FFF;
   border: 0;
   margin: 0.4em;
 `
 
+const ButtonSpecial = styled(Button)`
+  color: #FFF;
+  transition: all 300ms ease-out;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+`
+
+const Move = ({className}) => {
+  const [mouseX, setMouseX] = useState(0)
+
+  const handleMove = (e) => {
+    setMouseX(e.clientX)
+  } 
+
+  useEffect(() => {
+    window.addEventListener('mousemove', handleMove)
+
+    return () => {
+      window.removeEventListener('mousemove', handleMove)
+    }
+  }, [])
+
+  return(
+    <div className={className}>
+      {mouseX}
+    </div>
+  )
+}
+
+const MoveStyled = styled(Move)`
+  background: yellow;
+  font-size: 30px;
+`
+
 const App = () => {
-  const [active, setActive] = useState(false)
-
-  const toggle = () => setActive(!active)
-
   return (
     <div>
       <Header>
@@ -33,12 +65,16 @@ const App = () => {
           Styled Components
         </h1>
       </Header>
+
       <Button>
         Un Boton
       </Button>
-      <Button onClick={toggle} active={active}>
-        Toggle
-      </Button>
+
+      <ButtonSpecial>
+        Special
+      </ButtonSpecial>
+
+      <MoveStyled/>
     </div>
   )
 }
