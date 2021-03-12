@@ -1,14 +1,7 @@
 import React from 'react'
-import styled, {createGlobalStyle} from 'styled-components'
+import styled from 'styled-components'
 
-// Estilos globales con styled-components
-const GlobalStyle = createGlobalStyle`
-  body {
-    @import url('https://fonts.googleapis.com/css?family=Oswald&display=swap');
-    font-family: ${props => props.font};
-  }
-`
-
+// Metodo de atributos attrs con styled-components
 const Header = styled.header `
   background: #db7093;
   text-align: center;
@@ -19,16 +12,25 @@ const Header = styled.header `
   font-size: 14px;
 `
 
+const Input = styled.input.attrs((props) => ({
+  placeholder: props.placeholder || 'Ingresa el texto',
+  type: props.type || 'text'
+})) `
+  padding: 1em;
+  border: 1px solid blue;
+`
+
 const App = () => {
   return (
     <div>
-      <GlobalStyle font="'Oswald', sans-serif"/>
-
       <Header>
         <h1>
           Styled Components
         </h1>
       </Header>
+
+      <Input/>
+      <Input placeholder= 'Tu cerveza favorita'/>
     </div>
   )
 }
