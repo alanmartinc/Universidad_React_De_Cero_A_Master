@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-// Metodo de atributos attrs con styled-components
+// Componentes responsivos (Media Queries) con styled-components
 const Header = styled.header `
   background: #db7093;
   text-align: center;
@@ -10,14 +10,15 @@ const Header = styled.header `
   padding: 0.3em;
   margin: 0.3em;
   font-size: 14px;
-`
 
-const Input = styled.input.attrs((props) => ({
-  placeholder: props.placeholder || 'Ingresa el texto',
-  type: props.type || 'text'
-})) `
-  padding: 1em;
-  border: 1px solid blue;
+  @media (max-width: 700px) {
+    background: #000;
+    font-size: 20px;
+
+    h1 {
+      color: yellow;
+    }
+  }
 `
 
 const App = () => {
@@ -28,9 +29,6 @@ const App = () => {
           Styled Components
         </h1>
       </Header>
-
-      <Input/>
-      <Input placeholder= 'Tu cerveza favorita'/>
     </div>
   )
 }
