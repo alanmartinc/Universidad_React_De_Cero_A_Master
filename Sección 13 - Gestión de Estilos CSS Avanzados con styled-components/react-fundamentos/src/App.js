@@ -1,24 +1,7 @@
 import React from 'react'
 import styled, {keyframes} from 'styled-components'
 
-// Animaciones con styled-components
-const anima = keyframes`
-  0% {
-    background: #000;
-    transform: scale(1);
-  }
-
-  50% {
-    background: #db7093;
-    transform: scale(0.8);
-  }
-
-  100% {
-    background: #000;
-    transform: scale(1);
-  }
-`
-
+// Animaciones ejemplo #2
 const Header = styled.header `
   background: #db7093;
   text-align: center;
@@ -27,7 +10,35 @@ const Header = styled.header `
   padding: 0.3em;
   margin: 0.3em;
   font-size: 14px;
-  animation: ${anima} 2s ease-in-out infinite;
+`
+
+const pulse = keyframes`
+  0% {
+    transform: scale(1);
+    background: gray;
+    color: #000;
+  }
+
+  50% {
+    transform: scale(1.3);
+    background: purple;
+    color: #FFF;
+  }
+
+  100% {
+    transform: scale(1);
+    background: gray;
+    color: #000;
+  }
+`
+
+const Button = styled.button`
+  padding: 1em 2.5em;
+  margin: 1em;
+
+  &:hover {
+    animation: ${pulse} 2s ease-in-out;
+  }
 `
 
 const App = () => {
@@ -38,6 +49,10 @@ const App = () => {
           Styled Components
         </h1>
       </Header>
+
+      <Button>
+        Boton
+      </Button>
     </div>
   )
 }
