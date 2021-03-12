@@ -1,7 +1,33 @@
 import React from 'react'
 import styled from 'styled-components'
 
-// Componentes responsivos (Media Queries) con styled-components
+// Media Queries dinamicas con función
+const sizes = {
+  mobile: '375px',
+  tablet: '768px',
+  desktop: '1024px'
+}
+
+const device = {
+  mobile: (styles) => {
+    return `@media (min-width: ${sizes.mobile}){
+      ${styles}
+    }`
+  },
+
+  tablet: (styles) => {
+    return `@media (min-width: ${sizes.tablet}){
+      ${styles}
+    }`
+  },
+
+  desktop: (styles) => {
+    return `@media (min-width: ${sizes.desktop}){
+      ${styles}
+    }`
+  }
+}
+
 const Header = styled.header `
   background: #db7093;
   text-align: center;
@@ -11,14 +37,17 @@ const Header = styled.header `
   margin: 0.3em;
   font-size: 14px;
 
-  @media (max-width: 700px) {
+  ${device.mobile`
     background: #000;
     font-size: 20px;
+    color: yellow;
+  `}
 
-    h1 {
-      color: yellow;
-    }
-  }
+  ${device.tablet`
+    background: red;
+    font-size: 25px;
+    color: white;
+  `}
 `
 
 const App = () => {
