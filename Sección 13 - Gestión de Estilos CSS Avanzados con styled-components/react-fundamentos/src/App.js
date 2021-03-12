@@ -1,7 +1,14 @@
-import React, {useState, useEffect} from 'react'
-import styled from 'styled-components'
+import React from 'react'
+import styled, {createGlobalStyle} from 'styled-components'
 
-// Extendiendo estilos con styled-components
+// Estilos globales con styled-components
+const GlobalStyle = createGlobalStyle`
+  body {
+    @import url('https://fonts.googleapis.com/css?family=Oswald&display=swap');
+    font-family: ${props => props.font};
+  }
+`
+
 const Header = styled.header `
   background: #db7093;
   text-align: center;
@@ -12,69 +19,16 @@ const Header = styled.header `
   font-size: 14px;
 `
 
-const Button = styled.button `
-  padding: 0.6em 1.5em;
-  background: ${(props) => props.bg || 'gray'};
-  border-radius: 0.1em;
-  color: #FFF;
-  border: 0;
-  margin: 0.4em;
-`
-
-const ButtonSpecial = styled(Button)`
-  color: #FFF;
-  transition: all 300ms ease-out;
-
-  &:hover {
-    transform: scale(1.1);
-  }
-`
-
-const Move = ({className}) => {
-  const [mouseX, setMouseX] = useState(0)
-
-  const handleMove = (e) => {
-    setMouseX(e.clientX)
-  } 
-
-  useEffect(() => {
-    window.addEventListener('mousemove', handleMove)
-
-    return () => {
-      window.removeEventListener('mousemove', handleMove)
-    }
-  }, [])
-
-  return(
-    <div className={className}>
-      {mouseX}
-    </div>
-  )
-}
-
-const MoveStyled = styled(Move)`
-  background: yellow;
-  font-size: 30px;
-`
-
 const App = () => {
   return (
     <div>
+      <GlobalStyle font="'Oswald', sans-serif"/>
+
       <Header>
         <h1>
           Styled Components
         </h1>
       </Header>
-
-      <Button>
-        Un Boton
-      </Button>
-
-      <ButtonSpecial>
-        Special
-      </ButtonSpecial>
-
-      <MoveStyled/>
     </div>
   )
 }
