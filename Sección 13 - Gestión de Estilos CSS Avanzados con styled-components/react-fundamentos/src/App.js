@@ -1,33 +1,7 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 
-// Media Queries dinamicas con función
-const sizes = {
-  mobile: '375px',
-  tablet: '768px',
-  desktop: '1024px'
-}
-
-const device = {
-  mobile: (styles) => {
-    return `@media (min-width: ${sizes.mobile}){
-      ${styles}
-    }`
-  },
-
-  tablet: (styles) => {
-    return `@media (min-width: ${sizes.tablet}){
-      ${styles}
-    }`
-  },
-
-  desktop: (styles) => {
-    return `@media (min-width: ${sizes.desktop}){
-      ${styles}
-    }`
-  }
-}
-
+// Función de utilidad CSS en styled-components
 const Header = styled.header `
   background: #db7093;
   text-align: center;
@@ -36,18 +10,16 @@ const Header = styled.header `
   padding: 0.3em;
   margin: 0.3em;
   font-size: 14px;
+`
 
-  ${device.mobile`
-    background: #000;
-    font-size: 20px;
-    color: yellow;
-  `}
+const primaryStyles = css`
+  border: ${props => `2px solid ${props.borderColor || 'green'}`};
+`
 
-  ${device.tablet`
-    background: red;
-    font-size: 25px;
-    color: white;
-  `}
+const Button = styled.button`
+  padding: 1em 2em;
+  margin: 1em;
+  ${props => props.primary && primaryStyles}
 `
 
 const App = () => {
@@ -58,6 +30,14 @@ const App = () => {
           Styled Components
         </h1>
       </Header>
+
+      <Button primary borderColor='orangered'>
+        Dispara
+      </Button>
+
+      <Button primary>
+        Green
+      </Button>
     </div>
   )
 }
