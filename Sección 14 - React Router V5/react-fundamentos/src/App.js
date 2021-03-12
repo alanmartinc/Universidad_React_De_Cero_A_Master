@@ -1,7 +1,7 @@
 import React from 'react'
 import {BrowserRouter, Route} from 'react-router-dom'
 
-// Props disponibles en componente Route
+// Diferentes formas de renderizar con Route
 const Hola = () => (
   <h1>Hola</h1>
 )
@@ -19,8 +19,22 @@ const App = () => {
     <div>
       <BrowserRouter>
         <Route path='/' exact component={Home}/>
-        <Route path='/hola/' strict component={Hola}/>
-        <Route path='/productos' sensitive component={Productos}/>
+
+        <Route path='/hola/' strict render={Hola}/>
+
+        <Route path='/productos'>
+          {({match}) => {
+            if(!match) return(
+              <div>
+                *** Wops no coincide con /productos
+              </div>
+            )
+
+            return(
+              <Productos/>
+            )
+          }}
+        </Route>
       </BrowserRouter>
     </div>
   )
