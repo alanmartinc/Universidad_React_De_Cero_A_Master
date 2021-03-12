@@ -1,7 +1,24 @@
 import React from 'react'
-import styled, {css} from 'styled-components'
+import styled, {keyframes} from 'styled-components'
 
-// Función de utilidad CSS en styled-components
+// Animaciones con styled-components
+const anima = keyframes`
+  0% {
+    background: #000;
+    transform: scale(1);
+  }
+
+  50% {
+    background: #db7093;
+    transform: scale(0.8);
+  }
+
+  100% {
+    background: #000;
+    transform: scale(1);
+  }
+`
+
 const Header = styled.header `
   background: #db7093;
   text-align: center;
@@ -10,16 +27,7 @@ const Header = styled.header `
   padding: 0.3em;
   margin: 0.3em;
   font-size: 14px;
-`
-
-const primaryStyles = css`
-  border: ${props => `2px solid ${props.borderColor || 'green'}`};
-`
-
-const Button = styled.button`
-  padding: 1em 2em;
-  margin: 1em;
-  ${props => props.primary && primaryStyles}
+  animation: ${anima} 2s ease-in-out infinite;
 `
 
 const App = () => {
@@ -30,14 +38,6 @@ const App = () => {
           Styled Components
         </h1>
       </Header>
-
-      <Button primary borderColor='orangered'>
-        Dispara
-      </Button>
-
-      <Button primary>
-        Green
-      </Button>
     </div>
   )
 }
