@@ -2,14 +2,17 @@ import React from 'react'
 import {BrowserRouter, Route, Link, NavLink} from 'react-router-dom'
 import './App.css'
 
-// Como usar el componente NavLink
+// Props en componentes de ruta
 const Hola = () => (
   <h1>Hola</h1>
 )
 
-const Productos = () => (
-  <h1>Productos</h1>
-)
+const Productos = (props) => {
+  debugger
+  return(
+    <h1>Productos</h1>
+  )
+}
 
 const Home = (props) => {
   console.log(props)
