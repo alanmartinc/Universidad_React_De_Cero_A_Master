@@ -2,15 +2,25 @@ import React from 'react'
 import {BrowserRouter, Route, Link, NavLink} from 'react-router-dom'
 import './App.css'
 
-// Props en componentes de ruta
+// Rutas dinámicas con params
 const Hola = () => (
   <h1>Hola</h1>
 )
 
-const Productos = (props) => {
-  debugger
-  return(
+const Productos = (props) => (
+  <div>
     <h1>Productos</h1>
+    <Link to='/productos/gamers'>Gamers</Link>
+    <Link to='/productos/hogar'>Hogar</Link>
+  </div>
+)
+
+const ProductosCategoria = ({match}) => {
+  console.log(match)
+  return(
+    <div>
+      <h1>Categoria: {match.params.categoria}</h1>
+    </div>
   )
 }
 
@@ -49,7 +59,8 @@ const App = () => {
         <Navegation/>
             <Route path='/' exact render={Home}/>
             <Route path='/hola/' render={Hola}/>
-            <Route path='/productos/:id?' render={Productos}/>
+            <Route path='/productos' exact render={Productos}/>
+            <Route path='/productos/:categoria/:id?' render={ProductosCategoria}/>
       </BrowserRouter>
     </div>
   )
