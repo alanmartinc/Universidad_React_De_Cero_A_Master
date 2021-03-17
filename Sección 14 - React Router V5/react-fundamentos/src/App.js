@@ -1,13 +1,13 @@
 import React from 'react'
-import {BrowserRouter, Route, NavLink, Redirect} from 'react-router-dom'
+import {BrowserRouter, Route, NavLink} from 'react-router-dom'
 import './App.css'
 
-// Usando el componente Redirect
+// Navegación imperativa con métodos de history
 const Navegation = () => (
   <nav>
     <NavLink to='/' activeClassName='active'>Home</NavLink>
-    <NavLink to='/perfil' activeClassName='active'>Perfil</NavLink>
-    <NavLink to='/login' activeClassName='active'>Login</NavLink>
+    <NavLink to='/ninja' activeClassName='active'>Ninja</NavLink>
+    <NavLink to='/videos' activeClassName='active'>Videos</NavLink>
   </nav>
 )
 
@@ -15,37 +15,51 @@ const Home = () => (
   <h1>Home</h1>
 )
 
-const Login = ({location}) => {
-  if(location.state) {
-    return <h2>{location.state.message}</h2>
-  }
+const Ninja = () => (
+  <h1>Ninja</h1>
+)
 
+const Videos = () => (
+  <h1>Videos</h1>
+)
+
+const NavegacionImperativa = ({history}) => {
+  console.log(history)
+  
   return(
-    <h1>Login</h1>
+    <div>
+      <button onClick={history.goBack}>
+        Atras
+      </button>
+
+      <button onClick={history.goForward}>
+        Adelante
+      </button>
+
+      <button onClick={() => {
+        history.go(2)
+      }}>
+        Go 2
+      </button>
+
+      <button onClick={() => {
+        // push, replace
+        history.push('/ninja')
+      }}>
+        Go Ninja
+      </button>
+    </div>
   )
-}
-
-const isAuth = false
-
-const Perfil = () => {
-  return isAuth
-    ? <h2>Bienvenido a tu perfil</h2>
-    : <Redirect to={{
-      pathname: '/login',
-      state: {
-        message: 'Debes de hacer login para acceder a tu perfil'
-      }
-    }}/>
 }
 
 const App = () => {
   return (
     <BrowserRouter>
       <Navegation/>
+        <Route render={NavegacionImperativa}/>
         <Route path='/' exact render={Home}/>
-        <Route path='/login' render={Login}/>
-        <Route path='/perfil' render={Perfil}/>
-        <Redirect from='/p' to='/perfil'/>
+        <Route path='/ninja' render={Ninja}/>
+        <Route path='/videos' render={Videos}/>
     </BrowserRouter>
   )
 }
