@@ -1,27 +1,51 @@
 import React from 'react'
-import {BrowserRouter, Route, Switch} from 'react-router-dom'
+import {BrowserRouter, Route, NavLink, Redirect} from 'react-router-dom'
+import './App.css'
 
-// Usando el componente Switch
+// Usando el componente Redirect
+const Navegation = () => (
+  <nav>
+    <NavLink to='/' activeClassName='active'>Home</NavLink>
+    <NavLink to='/perfil' activeClassName='active'>Perfil</NavLink>
+    <NavLink to='/login' activeClassName='active'>Login</NavLink>
+  </nav>
+)
+
 const Home = () => (
   <h1>Home</h1>
 )
 
-const Videos = () => (
-  <h1>Videos</h1>
-)
+const Login = ({location}) => {
+  if(location.state) {
+    return <h2>{location.state.message}</h2>
+  }
 
-const Playlist = () => (
-  <h1>Playlist</h1>
-)
+  return(
+    <h1>Login</h1>
+  )
+}
+
+const isAuth = false
+
+const Perfil = () => {
+  return isAuth
+    ? <h2>Bienvenido a tu perfil</h2>
+    : <Redirect to={{
+      pathname: '/login',
+      state: {
+        message: 'Debes de hacer login para acceder a tu perfil'
+      }
+    }}/>
+}
 
 const App = () => {
   return (
     <BrowserRouter>
-      <Switch>
+      <Navegation/>
         <Route path='/' exact render={Home}/>
-        <Route path='/videos' render={Videos}/>
-        <Route path='/videos' render={Playlist}/>
-      </Switch>
+        <Route path='/login' render={Login}/>
+        <Route path='/perfil' render={Perfil}/>
+        <Redirect from='/p' to='/perfil'/>
     </BrowserRouter>
   )
 }
