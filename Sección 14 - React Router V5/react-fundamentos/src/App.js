@@ -1,8 +1,9 @@
 import React from 'react'
 import {BrowserRouter, Route, Link, NavLink} from 'react-router-dom'
+import queryString from 'query-string'
 import './App.css'
 
-// Rutas dinámicas con params
+// Pasar información con parámetros de consulta
 const Hola = () => (
   <h1>Hola</h1>
 )
@@ -49,8 +50,33 @@ const Navegation = () => (
         if(!match) return false
         return !match.isExact
     }}>Productos </NavLink>
+    <NavLink to='/ropa' activeStyle={NavActive}>Ropa</NavLink>
   </nav>
 )
+
+const Ropa = ({location}) => {
+  console.log(location)
+
+  const {color, talla} = new queryString.parse(location.search)
+
+  /*
+  const query = new URLSearchParams(location.search)
+  const color = query.get('color')
+  const talla = query.get('talla')
+  */
+
+  return(
+    <div>
+      <h1>Ropa</h1>
+      <div>
+        Color: {color}
+      </div>
+      <div>
+        Talla: {talla}
+      </div>
+    </div>
+  )
+}
 
 const App = () => {
   return (
@@ -61,6 +87,7 @@ const App = () => {
             <Route path='/hola/' render={Hola}/>
             <Route path='/productos' exact render={Productos}/>
             <Route path='/productos/:categoria/:id?' render={ProductosCategoria}/>
+            <Route path='/ropa' render={Ropa}/>
       </BrowserRouter>
     </div>
   )
