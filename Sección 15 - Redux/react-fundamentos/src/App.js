@@ -1,12 +1,16 @@
 import React from 'react'
-import './store'
+import {Provider} from 'react-redux'
+import store from './store'
+import Counter from './components/Counter'
 
-// Ejemplo de Store, Reducer, Acciones con Redux
+// Conectar componentes con Redux usando react-redux
 const App = () => {
   return (
-    <div>
-
-    </div>
+    <Provider store={store}>
+      <div>
+        <Counter/>
+      </div>
+    </Provider>
   )
 }
 

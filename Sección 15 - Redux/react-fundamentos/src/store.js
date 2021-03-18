@@ -24,33 +24,16 @@ function counter(state = initialState, action) {
 const store = createStore(counter)
 
 // Creadores de acciones
-const increment = () => {
+export const increment = () => {
     return {
         type: INCREMENT
     }
 }
 
-const decrement = () => {
+export const decrement = () => {
     return {
         type: DECREMENT
     }
 }
-
-// Acciones
-store.subscribe(() => {
-    console.log(store.getState())
-})
-
-store.dispatch(increment())
-store.dispatch(increment())
-store.dispatch(increment())
-
-setTimeout(() => {
-    store.dispatch(decrement())
-}, 2000)
-
-// store.getState() -> Elemento actual del estado
-// store.dispatch() -> Dispara acciones
-// store.subscribe() -> Se puede subscribir a los cambios que surjan dentro del store
 
 export default store
