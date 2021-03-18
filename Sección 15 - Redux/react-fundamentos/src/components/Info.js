@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {} from '../store'
+import {} from '../redux/store'
 
 const Info = (props) => {
     return(

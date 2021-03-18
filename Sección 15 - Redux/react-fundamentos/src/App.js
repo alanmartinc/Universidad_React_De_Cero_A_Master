@@ -1,10 +1,10 @@
 import React from 'react'
 import {Provider} from 'react-redux'
-import store from './store'
+import store from './redux/store'
 import Counter from './components/Counter'
 import Info from './components/Info'
 
-// Usando múltiples reducers en el Store
+// Organizar y refactorizar archivos con Redux
 const App = () => {
   return (
     <Provider store={store}>

@@ -1,9 +1,7 @@
+import {INCREMENT, DECREMENT} from '../actions/counterActions'
+
 // Reducer: Es una funcion pura que nos regresa el estado actual.
 const initialState = 0
-
-// Nombre de constantes de acciones
-export const INCREMENT = 'INCREMENT'
-export const DECREMENT = 'DECREMENT'
 
 function counter(state = initialState, action) {
     switch (action.type) {
