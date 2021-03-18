@@ -4,7 +4,7 @@ import store from './redux/store'
 import Counter from './components/Counter'
 import Info from './components/Info'
 
-// Organizar y refactorizar archivos con Redux
+// Géstion de estado usando Objetos
 const App = () => {
   return (
     <Provider store={store}>
