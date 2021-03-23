@@ -7,7 +7,7 @@ import store from './redux/store'
 import Todos from './components/Todos'
 
 
-// Géstion usando Arrays de Objetos (Workshop Todo-List)
+// Introducción a los Midlewares en Redux
 const App = () => {
   return (
     <Provider store={store}>
