@@ -16,6 +16,7 @@
     "react-spinners": "^0.10.6",
     "react-transition-group": "^4.4.1",
     "redux": "^4.0.5",
+    "redux-logger": "^3.0.6",
     "styled-components": "^5.2.1",
     "use-debounce": "^5.2.1",
     "web-vitals": "^0.2.4"

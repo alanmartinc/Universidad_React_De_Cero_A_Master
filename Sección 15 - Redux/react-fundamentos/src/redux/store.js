@@ -1,12 +1,8 @@
 import {createStore, applyMiddleware} from 'redux'
+import logger from 'redux-logger'
 import rootReducer from './reducers'
 
 // Midleware
-const logger = (store) => (next) => (action) => {
-    console.log("Ha ocurrido una nueva accion")
-    next(action)
-}
-
 const confirmDeleteTodo = (store) => (next) => (action) => {
     if(action.type === 'DELETE_TODO') {
         let conf = window.confirm('¿Seguro que quieres eliminar el todo?')

@@ -7,7 +7,7 @@ import store from './redux/store'
 import Todos from './components/Todos'
 
 
-// Introducción a los Midlewares en Redux
+// Ejemplo integrando Midlewares de terceros redux-logger
 const App = () => {
   return (
     <Provider store={store}>
