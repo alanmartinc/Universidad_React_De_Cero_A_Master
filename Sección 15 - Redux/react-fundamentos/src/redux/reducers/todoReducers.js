@@ -39,7 +39,10 @@ function todo(state = initialState, action) {
                 })
             }
         case DELETE_TODO:
-            return
+            return {
+                ...state,
+                todos: state.todos.filter((todo) => todo.id !== action.payload.id)
+            }
         default:
             return state
     }

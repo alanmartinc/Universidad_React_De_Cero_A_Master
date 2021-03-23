@@ -1,9 +1,11 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {addTodo} from '../../redux/actions/todoActions'
+import {addTodo, updateTodo, deleteTodo} from '../../redux/actions/todoActions'
 import {getId} from '../../utils'
+import TodoForm from './TodoForm'
+import TodoList from './TodoList'
 
-const Todos = ({todo, addTodo}) => {
+const Todos = ({todo, addTodo, updateTodo, deleteTodo}) => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
@@ -21,19 +23,8 @@ const Todos = ({todo, addTodo}) => {
     return(
         <div>
             <h1>Todos</h1>
-            <form onSubmit={handleSubmit}>
-                <input type='text'/>
-                <button>
-                    Agregar
-                </button>
-            </form>
-            <ul>
-                {todo.todos.map(todo => (
-                    <li key={todo.id}>
-                        <input type='checkbox' defaultChecked={todo.checked} /> {todo.text}
-                    </li>
-                ))}
-            </ul>
+            <TodoForm onSubmit={handleSubmit}/>
+            <TodoList todos={todo.todos} updateTodo={updateTodo} deleteTodo={deleteTodo}/>
         </div>
     )
 }
@@ -46,7 +37,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addTodo: (todo) => dispatch(addTodo(todo))
+        addTodo: (todo) => dispatch(addTodo(todo)),
+        updateTodo: (todo) => dispatch(updateTodo(todo)),
+        deleteTodo: (todo) => dispatch(deleteTodo(todo))
     }
 }
 

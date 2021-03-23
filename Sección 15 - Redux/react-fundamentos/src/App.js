@@ -7,7 +7,7 @@ import store from './redux/store'
 import Todos from './components/Todos'
 
 
-// Géstion usando Arrays de Objetos (Workshop Todo-List) 
+// Géstion usando Arrays de Objetos (Workshop Todo-List)
 const App = () => {
   return (
     <Provider store={store}>
