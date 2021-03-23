@@ -1,10 +1,10 @@
 import React from 'react'
 
 const Todo = ({todo, updateTodo, deleteTodo}) => (
-    <li onClick={() => {
+    <li>
+        <input type='checkbox' checked={todo.checked} onChange={() => {
         updateTodo(todo)
-    }}>
-        <input type='checkbox' defaultChecked={todo.checked} checked={todo.checked}/> 
+    }}/> 
         
         <button onClick={() => {
             deleteTodo(todo)
