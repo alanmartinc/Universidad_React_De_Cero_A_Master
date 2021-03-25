@@ -7,7 +7,7 @@ import store from './redux/store'
 import Todos from './components/Todos'
 
 
-// Ejemplo integrando Midlewares de terceros redux-logger
+// Introducción a Midlewares redux-thunk manejo de acciones asyncronas
 const App = () => {
   return (
     <Provider store={store}>
