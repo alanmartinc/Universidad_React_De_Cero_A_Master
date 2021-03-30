@@ -1,23 +1,22 @@
-import {UPDATE_NAME} from '../actions/userActions'
+import { UPDATE_NAME } from '../actions/userActions'
 
 const initialState = {
-    name: 'Gerardo',
-    country: 'Mexico'
+  name: 'Gerardo',
+  country: 'Mexico',
+  coord: ''
 }
 
-function user(state = initialState, action) {
-    console.log(action)
+function user (state = initialState, action) {
+  switch (action.type) {
+    case UPDATE_NAME:
+      return {
+        ...state,
+        name: action.payload.name
+      }
 
-    switch (action.type) {
-        case UPDATE_NAME:
-            return {
-                ...state,
-                name: action.payload.name
-            }
-
-        default:
-            return state
-    }
+    default:
+      return state
+  }
 }
 
 export default user
