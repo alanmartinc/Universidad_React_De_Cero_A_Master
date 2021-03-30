@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { addFruit } from '../redux/actions/fruitsActions'
 
 const Fruits = ({ fruits, addFruit }) => {
-  
   const handlerSubmit = (e) => {
     e.preventDefault()
 
