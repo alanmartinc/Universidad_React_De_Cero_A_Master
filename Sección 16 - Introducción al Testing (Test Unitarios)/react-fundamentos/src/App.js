@@ -1,6 +1,6 @@
 import React from 'react'
 
-// Correr pruebas con Jest
+// Pruebas de Strings
 const App = () => {
   return (
     <div>
