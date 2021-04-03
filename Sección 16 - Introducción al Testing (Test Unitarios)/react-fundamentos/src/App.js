@@ -1,6 +1,6 @@
 import React from 'react'
 
-// Pruebas de Strings
+// Pruebas de Numeros
 const App = () => {
   return (
     <div>
