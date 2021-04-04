@@ -1,6 +1,6 @@
 import React from 'react'
 
-// Pruebas de Numeros
+// Pruebas a Arrays
 const App = () => {
   return (
     <div>
