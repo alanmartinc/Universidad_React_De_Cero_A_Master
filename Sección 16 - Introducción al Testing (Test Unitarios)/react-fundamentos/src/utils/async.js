@@ -8,3 +8,19 @@ export const getDataCallback = (callback) => {
         callback(name)
     }, 2000)
 }
+
+export const getDataPromise = () => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve('Gerardo Gallegos')
+        }, 2000)
+    })
+}
+
+export const getDataPromiseError = () => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            reject('Error')
+        }, 2000)
+    })
+}

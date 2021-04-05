@@ -1,6 +1,6 @@
 import React from 'react'
 
-// Pruebas Asyncronas con Callbacks
+// Pruebas Asyncronas con Promesas
 const App = () => {
   return (
     <div>
