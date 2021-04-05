@@ -1,6 +1,6 @@
 import React from 'react'
 
-// Pruebas Asyncronas con Async Await
+// Ejemplo de prueba Asyncrona con solicitud HTTP
 const App = () => {
   return (
     <div>
