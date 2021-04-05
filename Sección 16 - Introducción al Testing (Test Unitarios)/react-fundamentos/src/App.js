@@ -1,11 +1,29 @@
 import React from 'react'
 
-// Formas de renderizar componente con Enzyme
+// Diferentes formas para seleccionar elementos o componentes
+export const Title = () => (
+  <h1>Introducción a Unit Testing</h1>
+)
+
 const App = () => {
   return (
-    <div>
-      <h1>Introducción a Unit Testing</h1>
-    </div>
+    <section>
+      <Title/>
+      <div className='container'>
+        <span num={3} active={false}>Primero</span>
+        <span num='3' active='false'>Segundo</span>
+      </div>
+      <input type='text'/>
+
+      <p>Fuera</p>
+
+      <div>
+        <p>Adentro 1</p>
+        <section>
+          <p>Adentro 2</p>
+        </section>
+      </div>
+    </section>
   )
 }
 
