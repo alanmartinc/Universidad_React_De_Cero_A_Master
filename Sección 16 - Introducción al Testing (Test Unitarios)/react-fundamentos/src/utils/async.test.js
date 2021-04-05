@@ -31,4 +31,18 @@ describe('Haciendo test a operaciones asincronas', () => {
     test('Haciendo test a promesa rechazada con expect', () => {
         return expect(getDataPromiseError()).rejects.toBe('Error')
     })
+
+    test('Haciendo test a promesa resuelta con async await', async () => {
+        const name = await getDataPromise()
+        expect(name).toBe('Gerardo Gallegos')
+    })
+
+    test('Haciendo test a promesa rechazada con async await', async () => {
+        try {
+            const name = await getDataPromiseError()
+            expect(name).toBe('Gerardo Gallegos')
+        } catch (error) {
+            expect(error).toBe('Error')
+        }
+    })
 })

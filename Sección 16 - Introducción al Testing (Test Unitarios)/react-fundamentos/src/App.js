@@ -1,6 +1,6 @@
 import React from 'react'
 
-// Pruebas Asyncronas con Promesas
+// Pruebas Asyncronas con Async Await
 const App = () => {
   return (
     <div>
