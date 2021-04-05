@@ -1,6 +1,6 @@
 import React from 'react'
 
-// Instalando y configurando Enzyme
+// Formas de renderizar componente con Enzyme
 const App = () => {
   return (
     <div>
