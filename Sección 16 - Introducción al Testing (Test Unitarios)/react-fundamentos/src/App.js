@@ -1,6 +1,6 @@
 import React from 'react'
 
-// Función de covertura (coverage) de Jest
+// Pruebas Asyncronas con Callbacks
 const App = () => {
   return (
     <div>
