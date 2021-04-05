@@ -1,6 +1,6 @@
 import React from 'react'
 
-// Ejemplo de prueba Asyncrona con solicitud HTTP
+// Instalando y configurando Enzyme
 const App = () => {
   return (
     <div>
