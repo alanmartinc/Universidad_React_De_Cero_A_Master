@@ -1,6 +1,6 @@
 import React from 'react'
 
-// Pruebas a Objetos
+// Pruebas con valores undefined null y booleanos
 const App = () => {
   return (
     <div>
