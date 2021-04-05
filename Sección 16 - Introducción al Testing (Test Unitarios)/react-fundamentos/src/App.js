@@ -1,6 +1,6 @@
 import React from 'react'
 
-// Pruebas con valores undefined null y booleanos
+// Función de covertura (coverage) de Jest
 const App = () => {
   return (
     <div>
