@@ -1,6 +1,6 @@
 import React from 'react'
 
-// Diferentes formas para seleccionar elementos o componentes
+// Realizando pruebas a nodos de componente
 export const Title = () => (
   <h1>Introducción a Unit Testing</h1>
 )
