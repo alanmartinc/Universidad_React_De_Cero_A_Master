@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Probando componente <List/> Validar que coincida con Snapshot 1`] = `
+<section>
+  <h1
+    className="big"
+  >
+    Frutas
+  </h1>
+  <ul>
+    <li
+      key="1"
+    >
+      fresa
+    </li>
+    <li
+      key="2"
+    >
+      manzana
+    </li>
+    <li
+      key="3"
+    >
+      naranja
+    </li>
+    <li
+      key="4"
+    >
+      mango
+    </li>
+  </ul>
+</section>
+`;

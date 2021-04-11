@@ -1,6 +1,6 @@
 import React from 'react'
 
-// Realizando pruebas a componente con props
+// Creando y probando usando Snapshots
 export const Title = () => (
   <h1>Introducción a Unit Testing</h1>
 )

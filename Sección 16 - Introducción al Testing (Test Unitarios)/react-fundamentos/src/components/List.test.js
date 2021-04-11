@@ -1,5 +1,6 @@
 import {configure, shallow, mount, render} from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+import toJson from 'enzyme-to-json'
 import List from './List'
 
 configure({
@@ -66,5 +67,17 @@ describe('Probando componente <List/>', () => {
         })
 
         expect(wrapper.find('.big').text()).toBe('Super Frutas')
+    })
+
+    test('Validar que coincida con Snapshot', () => {
+        const fruits = [
+            {name: 'fresa', id: 1},
+            {name: 'manzana', id: 2},
+            {name: 'naranja', id: 3},
+            {name: 'mango', id: 4}
+        ]
+
+        const wrapper = shallow(<List title='Frutas' list={fruits} />)
+        expect(toJson(wrapper)).toMatchSnapshot()
     })
 })
