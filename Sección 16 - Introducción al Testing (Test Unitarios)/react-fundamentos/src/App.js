@@ -1,6 +1,6 @@
 import React from 'react'
 
-// Realizando pruebas a nodos de componente
+// Realizando pruebas a componente con props
 export const Title = () => (
   <h1>Introducción a Unit Testing</h1>
 )

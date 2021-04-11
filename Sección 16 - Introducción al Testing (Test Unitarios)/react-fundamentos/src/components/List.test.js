@@ -38,4 +38,33 @@ describe('Probando componente <List/>', () => {
         // Validar HTML
         expect(wrapper.find('ul').childAt(2).html()).toBe('<li>naranja</li>')
     })
+
+    test('Validar actualizaciones en props', () => {
+        const fruits = [
+            {name: 'fresa', id: 1},
+            {name: 'manzana', id: 2},
+            {name: 'naranja', id: 3},
+            {name: 'mango', id: 4}
+        ]
+
+        const wrapper = shallow(<List title='Frutas' list={fruits} />)
+
+        // Validar cantidad de elementos li
+        expect(wrapper.find('li').length).toBe(4)
+
+        wrapper.setProps({
+            list: [
+                {name: 'Kiwi', id: 5}
+            ]
+        })
+
+        // Validar cantidad de elementos li
+        expect(wrapper.find('li').length).toBe(1)
+
+        wrapper.setProps({
+            title: 'Super Frutas'
+        })
+
+        expect(wrapper.find('.big').text()).toBe('Super Frutas')
+    })
 })
