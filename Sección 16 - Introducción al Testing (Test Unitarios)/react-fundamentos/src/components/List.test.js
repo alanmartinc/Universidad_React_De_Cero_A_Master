@@ -8,16 +8,20 @@ configure({
 })
 
 describe('Probando componente <List/>', () => {
+    const fruits = [
+        {name: 'fresa', id: 1},
+        {name: 'manzana', id: 2},
+        {name: 'naranja', id: 3},
+        {name: 'mango', id: 4}
+    ]
+
+    let wrapper 
+
+    beforeEach(() => {
+        wrapper = shallow(<List title='Frutas' list={fruits} />)
+    })
+
     test('Validar nodos', () => {
-        const fruits = [
-            {name: 'fresa', id: 1},
-            {name: 'manzana', id: 2},
-            {name: 'naranja', id: 3},
-            {name: 'mango', id: 4}
-        ]
-
-        const wrapper = shallow(<List title='Frutas' list={fruits} />)
-
         // Validar si existe nodo
         expect(wrapper.find('h1').exists()).toBe(true)
 
@@ -41,15 +45,6 @@ describe('Probando componente <List/>', () => {
     })
 
     test('Validar actualizaciones en props', () => {
-        const fruits = [
-            {name: 'fresa', id: 1},
-            {name: 'manzana', id: 2},
-            {name: 'naranja', id: 3},
-            {name: 'mango', id: 4}
-        ]
-
-        const wrapper = shallow(<List title='Frutas' list={fruits} />)
-
         // Validar cantidad de elementos li
         expect(wrapper.find('li').length).toBe(4)
 
@@ -70,14 +65,6 @@ describe('Probando componente <List/>', () => {
     })
 
     test('Validar que coincida con Snapshot', () => {
-        const fruits = [
-            {name: 'fresa', id: 1},
-            {name: 'manzana', id: 2},
-            {name: 'naranja', id: 3},
-            {name: 'mango', id: 4}
-        ]
-
-        const wrapper = shallow(<List title='Frutas' list={fruits} />)
         expect(toJson(wrapper)).toMatchSnapshot()
     })
 })

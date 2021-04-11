@@ -1,6 +1,6 @@
 import React from 'react'
 
-// Creando y probando usando Snapshots
+// Refactorizacion de tests usando beforeEach
 export const Title = () => (
   <h1>Introducción a Unit Testing</h1>
 )
