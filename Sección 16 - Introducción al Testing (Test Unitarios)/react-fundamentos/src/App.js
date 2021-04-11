@@ -1,28 +1,11 @@
 import React from 'react'
+import Counter from './components/Counter'
 
-// Refactorizacion de tests usando beforeEach
-export const Title = () => (
-  <h1>Introducción a Unit Testing</h1>
-)
-
+// Testing a componente con estado Hook y simulacion de eventos
 const App = () => {
   return (
     <section>
-      <Title/>
-      <div className='container'>
-        <span num={3} active={false}>Primero</span>
-        <span num='3' active='false'>Segundo</span>
-      </div>
-      <input type='text'/>
-
-      <p>Fuera</p>
-
-      <div>
-        <p>Adentro 1</p>
-        <section>
-          <p>Adentro 2</p>
-        </section>
-      </div>
+      <Counter/>
     </section>
   )
 }
